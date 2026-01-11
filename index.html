@@ -9,34 +9,69 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-deep: #08090C;
-      --bg-primary: #0A0E14;
-      --bg-secondary: #0F1419;
-      --bg-elevated: #151C24;
-      --bg-card: rgba(18, 24, 32, 0.85);
-      --bg-glass: rgba(255, 255, 255, 0.02);
-      --border: rgba(255, 255, 255, 0.04);
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(212, 175, 55, 0.3);
-      --text-primary: #FFFFFF;
-      --text-secondary: rgba(255, 255, 255, 0.65);
-      --text-muted: rgba(255, 255, 255, 0.35);
-      --text-micro: rgba(255, 255, 255, 0.25);
-      --accent: #00A67E;
-      --accent-glow: rgba(0, 166, 126, 0.12);
-      --gold: #C9A962;
-      --gold-light: #E8D5A3;
-      --gold-glow: rgba(201, 169, 98, 0.08);
-      --purple: #9D7AFF;
-      --purple-glow: rgba(157, 122, 255, 0.1);
-      --success: #34D399;
-      --radius: 16px;
-      --radius-lg: 24px;
+      /* MAYBACH DEEP TONES */
+      --bg-deep: #08090A;
+      --bg-primary: #0C0D0F;
+      --bg-secondary: #111214;
+      --bg-elevated: #18191C;
+      --bg-card: rgba(20, 21, 24, 0.9);
+      --bg-glass: rgba(255, 255, 255, 0.015);
+      
+      /* BORDERS - Refined */
+      --border: rgba(255, 255, 255, 0.03);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-accent: rgba(212, 175, 55, 0.2);
+      
+      /* TEXT - Softer Hierarchy */
+      --text-primary: #F5F5F5;
+      --text-secondary: rgba(245, 245, 245, 0.6);
+      --text-muted: rgba(245, 245, 245, 0.35);
+      --text-micro: rgba(245, 245, 245, 0.2);
+      
+      /* MAYBACH CHAMPAGNE (Premium Gold) */
+      --champagne: #D4AF37;
+      --champagne-light: #E8D5A3;
+      --champagne-pale: #F4ECD8;
+      --champagne-glow: rgba(212, 175, 55, 0.06);
+      --champagne-subtle: rgba(212, 175, 55, 0.03);
+      
+      /* Legacy Gold (für Kompatibilität) */
+      --gold: var(--champagne);
+      --gold-light: var(--champagne-light);
+      --gold-glow: var(--champagne-glow);
+      
+      /* PORSCHE ACCENTS - Gedämpft */
+      --accent: #1B8A6B;
+      --accent-light: #2AAA88;
+      --accent-glow: rgba(27, 138, 107, 0.1);
+      
+      /* REFINED PURPLE */
+      --purple: #8B6FD4;
+      --purple-light: #A78BDF;
+      --purple-glow: rgba(139, 111, 212, 0.08);
+      
+      /* PORSCHE TITANIUM */
+      --titanium: #6B6B70;
+      --titanium-light: #9A9AA0;
+      
+      /* SUCCESS */
+      --success: #2DD4A7;
+      
+      /* GEOMETRY */
+      --radius: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      
+      /* MOTION - Slower = More Luxurious */
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-luxury: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 0.2s;
+      --duration-normal: 0.4s;
+      --duration-slow: 0.6s;
     }
 
     * {
@@ -44,6 +79,35 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* Better touch targets */
+    button, .nav-item, .track-tab, .quick-action, .ritual-item, .ai-btn, .fab {
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    /* Accessibility Focus States */
+    button:focus-visible,
+    .nav-item:focus-visible,
+    .track-tab:focus-visible,
+    .track-toggle:focus-visible,
+    .quick-action:focus-visible,
+    .welcome-track:focus-visible,
+    .welcome-start:focus-visible {
+      outline: 2px solid var(--champagne);
+      outline-offset: 2px;
+    }
+    
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     html {
@@ -61,50 +125,94 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       letter-spacing: -0.01em;
+      font-weight: 400;
     }
 
+    /* Typography Classes */
     .serif {
       font-family: 'Cormorant Garamond', 'Times New Roman', serif;
       letter-spacing: 0.02em;
     }
+    
+    .display {
+      font-family: 'Playfair Display', 'Georgia', serif;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+    }
+    
+    .uppercase {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+    }
+    
+    /* Premium Selection */
+    ::selection {
+      background: var(--champagne);
+      color: var(--bg-deep);
+    }
 
-    /* Ambient Luxury Background */
+    /* Ambient Luxury Background - Maybach Style */
     .ambient {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
     }
     .ambient::before {
       content: '';
       position: absolute;
       inset: 0;
       background: 
-        radial-gradient(ellipse 800px 600px at 30% 10%, rgba(201, 169, 98, 0.04), transparent 60%),
-        radial-gradient(ellipse 600px 400px at 70% 90%, rgba(0, 166, 126, 0.03), transparent 50%),
-        radial-gradient(ellipse 500px 500px at 50% 50%, rgba(157, 122, 255, 0.02), transparent 50%);
-      animation: ambientBreath 25s ease-in-out infinite;
+        radial-gradient(ellipse 900px 700px at 20% 5%, rgba(212, 175, 55, 0.025), transparent 50%),
+        radial-gradient(ellipse 700px 500px at 80% 95%, rgba(27, 138, 107, 0.02), transparent 45%),
+        radial-gradient(ellipse 600px 600px at 50% 50%, rgba(139, 111, 212, 0.015), transparent 45%);
+      animation: ambientBreath 30s ease-in-out infinite;
     }
     .ambient::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 0%, var(--bg-deep) 100%);
-      opacity: 0.4;
+      background: 
+        linear-gradient(180deg, transparent 0%, var(--bg-deep) 100%),
+        linear-gradient(135deg, transparent 40%, rgba(212, 175, 55, 0.01) 60%, transparent 80%);
+      opacity: 0.5;
     }
     @keyframes ambientBreath {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.02); }
+      0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+      50% { opacity: 0.85; transform: scale(1.02) rotate(1deg); }
+    }
+    
+    /* Illuminated Edge - Maybach Detail */
+    .app::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(480px, 100%);
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(212, 175, 55, 0.15) 20%,
+        rgba(212, 175, 55, 0.3) 50%,
+        rgba(212, 175, 55, 0.15) 80%,
+        transparent 100%
+      );
+      z-index: 100;
     }
 
-    /* Grain Texture */
+    /* Grain Texture - Refined */
     .grain {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.015;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.012;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
     }
 
     /* App Container */
@@ -168,6 +276,80 @@
       font-weight: 600;
       color: var(--gold-light);
     }
+    .streak-icon {
+      width: 14px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .streak-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--champagne);
+      fill: none;
+    }
+
+    /* Global Track Switcher */
+    .global-track-switch {
+      display: flex;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .track-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: transparent;
+      border: none;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+    }
+    .track-toggle:hover {
+      color: var(--text-secondary);
+    }
+    .track-toggle.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0, 166, 126, 0.3);
+    }
+    .track-toggle.active[data-track="leti"] {
+      background: var(--purple);
+      box-shadow: 0 2px 8px rgba(157, 122, 255, 0.3);
+    }
+    .track-toggle-icon {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .track-toggle-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+    }
+    .track-toggle-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    @media (max-width: 380px) {
+      .track-toggle-label {
+        display: none;
+      }
+      .track-toggle {
+        padding: 6px 10px;
+      }
+    }
 
     /* Bottom Navigation */
     .bottom-nav {
@@ -176,12 +358,12 @@
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 8px 16px;
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
-      background: rgba(8, 9, 12, 0.92);
+      padding: 10px 16px;
+      padding-bottom: max(14px, env(safe-area-inset-bottom));
+      background: rgba(10, 10, 11, 0.95);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(212, 175, 55, 0.06);
     }
     .nav-inner {
       max-width: 480px;
@@ -195,32 +377,63 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      padding: 8px 4px;
+      gap: 5px;
+      padding: 10px 4px;
       background: none;
       border: none;
-      border-radius: 12px;
+      border-radius: var(--radius);
       cursor: pointer;
-      transition: all 0.2s var(--ease-out);
+      transition: all var(--duration-normal) var(--ease-luxury);
       color: var(--text-muted);
+      position: relative;
+    }
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      width: 3px;
+      height: 3px;
+      background: var(--champagne);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--champagne);
+      transition: transform var(--duration-normal) var(--ease-spring);
     }
     .nav-item:hover {
       color: var(--text-secondary);
     }
     .nav-item.active {
-      color: var(--gold-light);
+      color: var(--champagne-light);
+    }
+    .nav-item.active::after {
+      transform: translateX(-50%) scale(1);
     }
     .nav-item.active .nav-icon {
-      transform: scale(1.1);
+      transform: scale(1.05);
+    }
+    .nav-item.active .nav-icon svg {
+      stroke: var(--champagne-light);
     }
     .nav-icon {
-      font-size: 20px;
-      transition: transform 0.3s var(--ease-spring);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--duration-normal) var(--ease-spring);
+    }
+    .nav-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      transition: stroke var(--duration-normal) var(--ease-out);
     }
     .nav-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
     /* Main Content */
@@ -232,50 +445,65 @@
     /* Views */
     .view {
       display: none;
-      animation: viewFadeIn 0.4s var(--ease-out);
+      animation: viewFadeIn 0.5s var(--ease-luxury);
+      will-change: opacity, transform;
     }
     .view.active {
       display: block;
     }
     @keyframes viewFadeIn {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { 
+        opacity: 0; 
+        transform: translateY(12px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
     }
 
-    /* Hero Section */
+    /* Hero Section - Premium */
     .hero {
       text-align: center;
-      padding: 32px 0 40px;
+      padding: 36px 0 44px;
     }
     .hero-eyebrow {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.25em;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
+      color: var(--champagne);
+      margin-bottom: 18px;
+      opacity: 0.9;
     }
     .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 36px;
-      font-weight: 500;
+      font-family: 'Playfair Display', 'Georgia', serif;
+      font-size: 38px;
+      font-weight: 400;
       line-height: 1.1;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      margin-bottom: 14px;
+      letter-spacing: 0.01em;
+      background: linear-gradient(
+        180deg, 
+        var(--text-primary) 0%, 
+        rgba(245, 245, 245, 0.7) 100%
+      );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .hero-sub {
-      font-size: 15px;
+      font-size: 14px;
+      font-weight: 400;
       color: var(--text-secondary);
-      line-height: 1.6;
-      max-width: 320px;
+      line-height: 1.7;
+      max-width: 300px;
       margin: 0 auto;
+      letter-spacing: 0.01em;
     }
     .hero-sub b {
-      color: var(--gold-light);
-      font-weight: 600;
+      color: var(--champagne-light);
+      font-weight: 500;
     }
 
     /* Stats Row */
@@ -309,42 +537,78 @@
       margin-top: 6px;
     }
 
-    /* Section */
+    /* Section - Premium */
     .section {
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
     .section-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
     }
     .section-title {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--text-micro);
+      color: var(--titanium);
     }
     .section-action {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--gold);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--champagne);
       text-decoration: none;
       cursor: pointer;
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+    .section-action:hover {
+      color: var(--champagne-light);
     }
 
-    /* Card Base */
+    /* Card Base - Premium */
     .card {
+      position: relative;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       overflow: hidden;
-      transition: all 0.3s var(--ease-out);
+      transition: all var(--duration-normal) var(--ease-luxury);
+      box-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.1),
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(212, 175, 55, 0.02) 50%,
+        transparent 100%
+      );
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease-luxury);
+      pointer-events: none;
     }
     .card:hover {
-      border-color: var(--border-subtle);
+      border-color: rgba(212, 175, 55, 0.1);
+      box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.12),
+        0 8px 24px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(212, 175, 55, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      transform: translateY(-1px);
+    }
+    .card:hover::before {
+      opacity: 1;
     }
     .card-header {
       display: flex;
@@ -352,11 +616,13 @@
       justify-content: space-between;
       padding: 18px 20px;
       border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.01);
     }
     .card-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text-primary);
+      letter-spacing: 0.02em;
     }
     .card-body {
       padding: 20px;
@@ -443,7 +709,16 @@
       transform: translateY(0);
     }
     .quick-icon {
-      font-size: 22px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quick-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--champagne);
     }
     .quick-label {
       font-size: 11px;
@@ -732,8 +1007,31 @@
     .response-a::before {
       content: '→';
       margin-right: 8px;
-      color: var(--gold);
+      color: var(--champagne);
       font-weight: 600;
+    }
+    .response-tip {
+      font-size: 11px;
+      color: var(--titanium);
+      padding-left: 24px;
+      margin-top: 8px;
+      font-style: italic;
+      opacity: 0.8;
+    }
+    
+    /* Gatekeeper Section */
+    .gatekeeper-intro {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .gatekeeper-protip {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .gatekeeper-protip b {
+      color: var(--text-primary);
     }
 
     /* Copy Button */
@@ -869,6 +1167,588 @@
       line-height: 1.5;
     }
 
+    /* Price Grid (Amy) */
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .price-item {
+      text-align: center;
+      padding: 16px 8px;
+      background: rgba(212, 175, 55, 0.05);
+      border-radius: var(--radius);
+    }
+    .price-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--titanium);
+      margin-bottom: 6px;
+    }
+    .price-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--champagne);
+    }
+    .price-note {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    
+    /* ROI Example */
+    .roi-example {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .roi-line {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .roi-line:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .roi-line b {
+      color: var(--text-primary);
+    }
+    .roi-highlight {
+      color: var(--champagne);
+      font-weight: 600;
+    }
+    .roi-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--champagne), transparent);
+      margin: 12px 0;
+    }
+    
+    /* Facts List */
+    .facts-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .fact-item {
+      font-size: 12px;
+      color: var(--text-secondary);
+      padding: 10px;
+      background: var(--bg-glass);
+      border-radius: 8px;
+    }
+    .fact-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--champagne);
+      margin-right: 6px;
+    }
+    .fact-num.purple {
+      color: var(--purple);
+    }
+    
+    /* Price Table (Leti) */
+    .price-table {
+      font-size: 12px;
+    }
+    .price-table-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(139, 111, 212, 0.1);
+      border-radius: 8px 8px 0 0;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .price-table-header span:first-child {
+      text-align: left;
+    }
+    .price-table-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 8px;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-secondary);
+    }
+    .price-table-row:last-child {
+      border-bottom: none;
+    }
+    .price-table-row.highlight {
+      background: rgba(139, 111, 212, 0.05);
+    }
+    .price-table-label {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    /* Funding Options */
+    .funding-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .funding-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-glass);
+      border-radius: 10px;
+    }
+    .funding-icon {
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-elevated);
+      border-radius: 10px;
+    }
+    .funding-content {
+      flex: 1;
+    }
+    .funding-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .funding-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Follow-Up Scripts */
+    .followup-script {
+      border-left: 3px solid var(--champagne);
+      padding-left: 16px;
+      margin-bottom: 16px;
+    }
+    .followup-script.purple {
+      border-left-color: var(--purple);
+    }
+    .followup-line {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 8px 0;
+      line-height: 1.5;
+    }
+    .followup-line b {
+      color: var(--text-primary);
+    }
+    .followup-line.highlight {
+      color: var(--text-primary);
+      font-weight: 500;
+      background: var(--champagne-glow);
+      margin: 8px -16px 8px -19px;
+      padding: 12px 16px 12px 19px;
+      border-radius: 0 8px 8px 0;
+    }
+    .followup-script.purple .followup-line.highlight {
+      background: var(--purple-glow);
+    }
+    .followup-tip {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 12px 14px;
+      background: var(--bg-glass);
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+    .followup-tip b {
+      color: var(--champagne);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .followup-tip.purple b {
+      color: var(--purple);
+    }
+    
+    /* Follow-Up Cadence */
+    .followup-cadence {
+      font-size: 13px;
+    }
+    .cadence-title {
+      font-weight: 600;
+      color: var(--champagne);
+      margin-bottom: 14px;
+      font-size: 14px;
+    }
+    .followup-cadence.purple .cadence-title {
+      color: var(--purple);
+    }
+    .cadence-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cadence-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-secondary);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cadence-item:last-child {
+      border-bottom: none;
+    }
+    .cadence-day {
+      font-weight: 600;
+      color: var(--champagne);
+      min-width: 60px;
+      font-size: 11px;
+    }
+    .followup-cadence.purple .cadence-day {
+      color: var(--purple);
+    }
+    .cadence-note {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* Mental Tips - Nach dem Nein */
+    .mental-card {
+      border-color: var(--champagne);
+    }
+    .mental-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .mental-icon {
+      font-size: 24px;
+    }
+    .mental-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .mental-fact {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .mental-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 500;
+      color: var(--champagne);
+      line-height: 1;
+    }
+    .mental-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .mental-desc b {
+      color: var(--text-primary);
+    }
+    
+    .mental-tips {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .mental-tip-card {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .mental-tip-num {
+      width: 28px;
+      height: 28px;
+      background: var(--champagne-glow);
+      border: 1px solid var(--champagne);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--champagne);
+      flex-shrink: 0;
+    }
+    .mental-tip-content {
+      flex: 1;
+    }
+    .mental-tip-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .mental-tip-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    
+    .power-phrase {
+      text-align: center;
+    }
+    .power-phrase-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .power-phrase-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--champagne);
+      font-style: italic;
+    }
+    
+    .emergency-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .emergency-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding: 10px 12px;
+      background: var(--bg-glass);
+      border-radius: 8px;
+    }
+    .emergency-icon {
+      font-size: 18px;
+    }
+
+    /* Welcome Screen */
+    .welcome-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 1;
+      transition: opacity 0.6s var(--ease-luxury), visibility 0.6s;
+    }
+    .welcome-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .welcome-content {
+      text-align: center;
+      max-width: 380px;
+      position: relative;
+      animation: welcomeFadeIn 1s var(--ease-out) forwards;
+    }
+    @keyframes welcomeFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .welcome-glow {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      animation: welcomeGlow 4s ease-in-out infinite;
+    }
+    @keyframes welcomeGlow {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+    }
+    .welcome-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      color: var(--champagne);
+      padding: 8px 16px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 99px;
+      margin-bottom: 32px;
+      background: rgba(212, 175, 55, 0.05);
+    }
+    .welcome-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+      background: linear-gradient(180deg, var(--text-primary) 0%, rgba(245, 245, 245, 0.6) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .welcome-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+    .welcome-features {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .welcome-feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .welcome-feature-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    .welcome-feature-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--champagne);
+    }
+    .welcome-track-select {
+      margin-bottom: 32px;
+    }
+    .welcome-track-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--titanium);
+      margin-bottom: 16px;
+    }
+    .welcome-tracks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .welcome-track {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 20px 16px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+    }
+    .welcome-track:hover {
+      border-color: var(--border-subtle);
+      transform: translateY(-2px);
+    }
+    .welcome-track.selected {
+      border-color: var(--champagne);
+      background: var(--champagne-glow);
+    }
+    .welcome-track.selected[data-track="leti"] {
+      border-color: var(--purple);
+      background: var(--purple-glow);
+    }
+    .welcome-track-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .welcome-track-icon svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--titanium);
+      transition: stroke 0.3s var(--ease-out);
+    }
+    .welcome-track.selected .welcome-track-icon svg {
+      stroke: var(--champagne);
+    }
+    .welcome-track.selected[data-track="leti"] .welcome-track-icon svg {
+      stroke: var(--purple);
+    }
+    .welcome-track-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .welcome-track-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .welcome-start {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--champagne), #B8973A);
+      border: none;
+      border-radius: 99px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--bg-deep);
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    }
+    .welcome-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+    }
+    .welcome-start svg {
+      width: 18px;
+      height: 18px;
+    }
+    .welcome-footer {
+      margin-top: 48px;
+      font-size: 10px;
+      color: var(--text-micro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .welcome-brand {
+      color: var(--titanium);
+      font-weight: 500;
+    }
+
     /* Timing Slots */
     .timing-grid {
       display: grid;
@@ -900,25 +1780,42 @@
       color: var(--gold);
     }
 
-    /* Quote */
+    /* Quote - Premium Maybach */
     .quote {
-      padding: 24px;
-      background: var(--bg-card);
-      border-left: 3px solid var(--gold);
+      position: relative;
+      padding: 28px 28px 28px 32px;
+      background: linear-gradient(135deg, var(--bg-card), rgba(212, 175, 55, 0.02));
+      border-left: 2px solid var(--champagne);
       border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      overflow: hidden;
+    }
+    .quote::before {
+      content: '"';
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: var(--champagne);
+      opacity: 0.15;
+      line-height: 1;
     }
     .quote-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 500;
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 400;
       font-style: italic;
       color: var(--text-primary);
-      line-height: 1.5;
-      margin-bottom: 12px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      letter-spacing: 0.01em;
     }
     .quote-author {
-      font-size: 12px;
-      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--titanium);
     }
 
     /* Follow-up Timeline */
@@ -1006,6 +1903,24 @@
       animation: viewFadeIn 0.3s var(--ease-out);
     }
     .track.active {
+      display: block;
+    }
+
+    /* Learn Track Content */
+    .learn-track {
+      display: none;
+      animation: viewFadeIn 0.3s var(--ease-out);
+    }
+    .learn-track.active {
+      display: block;
+    }
+
+    /* Tools Track Content */
+    .tools-track {
+      display: none;
+      animation: viewFadeIn 0.3s var(--ease-out);
+    }
+    .tools-track.active {
       display: block;
     }
 
@@ -1654,50 +2569,667 @@
       }
     }
 
-    /* FAB */
+    /* ========== DESKTOP PERFEKTIONIERUNG ========== */
+    @media (min-width: 1024px) {
+      /* Zentrierte App mit elegantem Rahmen */
+      .app {
+        max-width: 560px;
+        margin: 0 auto;
+        box-shadow: 
+          0 0 0 1px rgba(212, 175, 55, 0.08),
+          0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        border-radius: 0;
+        min-height: 100vh;
+      }
+      
+      /* Elegantere Header */
+      .header {
+        padding: 16px 24px;
+        backdrop-filter: blur(20px);
+      }
+      
+      /* Desktop Navigation verfeinert */
+      .desktop-nav {
+        display: flex;
+        gap: 6px;
+        background: var(--bg-glass);
+        padding: 4px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.05);
+      }
+      .desktop-nav-item {
+        padding: 10px 18px;
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.25s var(--ease-luxury);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .desktop-nav-item svg {
+        width: 14px;
+        height: 14px;
+        opacity: 0.7;
+        transition: opacity 0.25s ease;
+      }
+      .desktop-nav-item:hover {
+        color: var(--text-primary);
+        background: rgba(255,255,255,0.05);
+      }
+      .desktop-nav-item:hover svg {
+        opacity: 1;
+      }
+      .desktop-nav-item.active {
+        color: var(--champagne);
+        background: linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.08) 100%);
+        box-shadow: 0 2px 8px rgba(212,175,55,0.15);
+      }
+      .desktop-nav-item.active svg {
+        opacity: 1;
+      }
+      
+      /* Hover-Effekte für Karten */
+      .card {
+        transition: all 0.3s var(--ease-luxury);
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+          0 8px 25px rgba(0, 0, 0, 0.15),
+          0 0 0 1px rgba(212, 175, 55, 0.1);
+      }
+      
+      /* Response Cards Hover */
+      .response-card {
+        transition: all 0.25s var(--ease-luxury);
+      }
+      .response-card:hover {
+        background: rgba(255,255,255,0.04);
+        border-color: rgba(212, 175, 55, 0.2);
+      }
+      
+      /* Elegantere Buttons */
+      .quick-action {
+        transition: all 0.25s var(--ease-luxury);
+      }
+      .quick-action:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        border-color: rgba(212, 175, 55, 0.3);
+      }
+      
+      /* Track Toggle Verfeinerung */
+      .track-toggle {
+        transition: all 0.25s var(--ease-luxury);
+      }
+      .track-toggle:hover:not(.active) {
+        background: rgba(255,255,255,0.05);
+        transform: translateY(-1px);
+      }
+      
+      /* FAB & AI Button Desktop Position */
+      .fab {
+        bottom: 32px;
+        right: calc(50% - 280px + 24px);
+      }
+      .ai-btn {
+        bottom: 32px;
+        left: calc(50% - 280px + 24px);
+      }
+      
+      /* Cursor Pointer für alle interaktiven Elemente */
+      .card, .response-card, .quick-action, .track-toggle, .persona-card {
+        cursor: pointer;
+      }
+    }
+
+    /* ========== LARGE DESKTOP ========== */
+    @media (min-width: 1400px) {
+      .app {
+        max-width: 600px;
+        border-radius: 24px;
+        margin: 24px auto;
+        min-height: calc(100vh - 48px);
+      }
+      
+      .fab {
+        right: calc(50% - 300px + 32px);
+      }
+      .ai-btn {
+        left: calc(50% - 300px + 32px);
+      }
+    }
+
+    /* ========== ELEGANTE ANIMATIONEN ========== */
+    @keyframes subtleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    /* Shimmer-Effekt für Gold-Elemente */
+    .welcome-title,
+    .power-phrase-text {
+      background: linear-gradient(
+        90deg,
+        var(--champagne) 0%,
+        #f5e6b8 25%,
+        var(--champagne) 50%,
+        #f5e6b8 75%,
+        var(--champagne) 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+    
+    /* Subtile Hover-Glow */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(212, 175, 55, 0.06),
+        transparent 40%
+      );
+      pointer-events: none;
+    }
+    .card:hover::before {
+      opacity: 1;
+    }
+    
+    /* ========== TYPOGRAFIE-VERFEINERUNG ========== */
+    .hero-title {
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 20px rgba(212, 175, 55, 0.2);
+    }
+    
+    .section-title {
+      letter-spacing: 0.15em;
+    }
+    
+    .script-text {
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+    
+    .response-a {
+      line-height: 1.65;
+    }
+    
+    .response-tip {
+      letter-spacing: 0.02em;
+    }
+    
+    /* ========== SCROLLBAR STYLING ========== */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.3);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(212, 175, 55, 0.5);
+    }
+    
+    /* Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+    }
+    
+    /* ========== SELECTION STYLING ========== */
+    ::selection {
+      background: rgba(212, 175, 55, 0.3);
+      color: var(--text-primary);
+    }
+    
+    /* ========== SMOOTH TRANSITIONS ========== */
+    .view {
+      transition: opacity 0.4s var(--ease-luxury), transform 0.4s var(--ease-luxury);
+    }
+    .view:not(.active) {
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+    .view.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .main {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 24px 32px;
+        padding-bottom: 120px;
+      }
+      .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .quick-actions {
+        gap: 16px;
+      }
+      .quick-action {
+        padding: 20px 24px;
+      }
+      .stats-row {
+        max-width: 500px;
+        margin: 24px auto;
+      }
+      .price-grid {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      .mental-tips {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .facts-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .followup-cadence {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    /* ========== WELCOME SCREEN RESPONSIVE ========== */
+    @media (max-width: 480px) {
+      .welcome-title {
+        font-size: 36px;
+      }
+      .welcome-subtitle {
+        font-size: 14px;
+        padding: 0 10px;
+      }
+      .welcome-features {
+        gap: 16px;
+      }
+      .welcome-feature {
+        font-size: 10px;
+      }
+      .welcome-feature-icon {
+        width: 42px;
+        height: 42px;
+      }
+      .welcome-feature-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+      .welcome-tracks {
+        gap: 10px;
+      }
+      .welcome-track {
+        padding: 16px 12px;
+      }
+      .welcome-track-icon {
+        width: 28px;
+        height: 28px;
+      }
+      .welcome-track-icon svg {
+        width: 28px;
+        height: 28px;
+      }
+      .welcome-track-name {
+        font-size: 14px;
+      }
+      .welcome-track-desc {
+        font-size: 10px;
+      }
+      .welcome-start {
+        padding: 14px 28px;
+        font-size: 14px;
+      }
+      .welcome-footer {
+        margin-top: 32px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .welcome-title {
+        font-size: 30px;
+      }
+      .welcome-badge {
+        font-size: 8px;
+        padding: 6px 12px;
+      }
+      .welcome-features {
+        gap: 12px;
+      }
+      .welcome-feature-icon {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    /* ========== PRICE & ROI RESPONSIVE ========== */
+    @media (max-width: 480px) {
+      .price-grid {
+        gap: 8px;
+      }
+      .price-item {
+        padding: 12px 6px;
+      }
+      .price-label {
+        font-size: 9px;
+      }
+      .price-value {
+        font-size: 18px;
+      }
+      .price-note {
+        font-size: 9px;
+      }
+      .roi-example {
+        font-size: 12px;
+      }
+      .roi-line {
+        padding: 6px 0;
+      }
+      .facts-list {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .fact-item {
+        padding: 8px 10px;
+        font-size: 11px;
+      }
+      .fact-num {
+        font-size: 14px;
+      }
+      .price-table {
+        font-size: 11px;
+      }
+      .price-table-header,
+      .price-table-row {
+        padding: 8px 10px;
+        gap: 6px;
+      }
+      .funding-item {
+        padding: 10px;
+        gap: 10px;
+      }
+      .funding-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+      .funding-title {
+        font-size: 12px;
+      }
+      .funding-desc {
+        font-size: 10px;
+      }
+    }
+
+    /* ========== MENTAL TIPS RESPONSIVE ========== */
+    @media (max-width: 480px) {
+      .mental-stat {
+        font-size: 36px;
+      }
+      .mental-desc {
+        font-size: 13px;
+      }
+      .mental-tip-card {
+        padding: 14px;
+        gap: 12px;
+      }
+      .mental-tip-num {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+      }
+      .mental-tip-title {
+        font-size: 13px;
+      }
+      .mental-tip-text {
+        font-size: 11px;
+      }
+      .power-phrase-text {
+        font-size: 18px;
+      }
+      .emergency-item {
+        padding: 8px 10px;
+        font-size: 12px;
+        gap: 10px;
+      }
+      .emergency-icon {
+        font-size: 16px;
+      }
+    }
+
+    /* ========== FOLLOW-UP RESPONSIVE ========== */
+    @media (max-width: 480px) {
+      .followup-line {
+        font-size: 13px;
+        padding: 6px 0;
+      }
+      .followup-line.highlight {
+        padding: 10px 14px 10px 17px;
+        margin: 6px -14px 6px -17px;
+      }
+      .followup-tip {
+        font-size: 11px;
+        padding: 10px 12px;
+      }
+      .cadence-title {
+        font-size: 13px;
+      }
+      .cadence-item {
+        font-size: 12px;
+        padding: 5px 0;
+      }
+      .cadence-day {
+        min-width: 55px;
+        font-size: 10px;
+      }
+      .cadence-note {
+        font-size: 10px;
+      }
+    }
+
+    /* ========== GATEKEEPER RESPONSIVE ========== */
+    @media (max-width: 480px) {
+      .gatekeeper-intro {
+        font-size: 12px;
+      }
+      .gatekeeper-protip {
+        font-size: 12px;
+        line-height: 1.7;
+      }
+    }
+
+    /* ========== EXTRA SMALL DEVICES ========== */
+    @media (max-width: 340px) {
+      .hero-title {
+        font-size: 24px;
+      }
+      .hero-sub {
+        font-size: 13px;
+      }
+      .stat-value {
+        font-size: 22px;
+      }
+      .quick-actions {
+        gap: 8px;
+      }
+      .quick-action {
+        padding: 14px 8px;
+      }
+      .quick-icon {
+        width: 20px;
+        height: 20px;
+      }
+      .quick-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+      .quick-label {
+        font-size: 10px;
+      }
+      .track-tab {
+        padding: 10px 6px;
+        font-size: 10px;
+      }
+      .track-tab svg {
+        width: 12px;
+        height: 12px;
+      }
+      .nav-label {
+        font-size: 8px;
+      }
+      .welcome-title {
+        font-size: 26px;
+      }
+      .welcome-track {
+        padding: 14px 10px;
+      }
+      .welcome-start {
+        padding: 12px 24px;
+        font-size: 13px;
+      }
+    }
+
+    /* FAB - Premium Porsche/Maybach */
     .fab {
       position: fixed;
-      bottom: 90px;
+      bottom: 94px;
       right: 20px;
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      width: 58px;
+      height: 58px;
+      background: linear-gradient(145deg, var(--champagne), #B8973A);
       border: none;
-      border-radius: 18px;
-      color: var(--bg-primary);
+      border-radius: 16px;
+      color: var(--bg-deep);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 32px rgba(201, 169, 98, 0.35);
-      transition: all 0.3s var(--ease-out);
+      box-shadow: 
+        0 4px 12px rgba(212, 175, 55, 0.25),
+        0 12px 40px rgba(212, 175, 55, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+      transition: all var(--duration-normal) var(--ease-luxury);
       z-index: 99;
     }
+    .fab::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
     .fab:hover {
-      transform: translateY(-2px) scale(1.02);
+      transform: translateY(-3px);
+      box-shadow: 
+        0 6px 16px rgba(212, 175, 55, 0.3),
+        0 16px 48px rgba(212, 175, 55, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     }
     .fab:active {
-      transform: scale(0.95);
+      transform: scale(0.96);
+      transition-duration: 0.1s;
     }
     .fab svg {
       width: 22px;
       height: 22px;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
     }
     .fab-pulse {
       position: absolute;
       inset: 0;
-      border-radius: 18px;
-      background: inherit;
-      animation: fabPulse 2.5s var(--ease-out) infinite;
+      border-radius: 16px;
+      background: var(--champagne);
+      animation: fabPulse 3s var(--ease-out) infinite;
       z-index: -1;
     }
     @keyframes fabPulse {
       0%, 100% { transform: scale(1); opacity: 0; }
-      50% { transform: scale(1.12); opacity: 0.25; }
+      50% { transform: scale(1.15); opacity: 0.2; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Welcome Screen -->
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-content">
+      <div class="welcome-glow"></div>
+      
+      <div class="welcome-badge">LEVERAGE × COLLEGE FASHION</div>
+      
+      <h1 class="welcome-title">Sales Academy</h1>
+      
+      <p class="welcome-subtitle">Dein Coach für erfolgreiche Calls</p>
+      
+      <div class="welcome-features">
+        <div class="welcome-feature">
+          <span class="welcome-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></span>
+          <span>Skripte & Einwände</span>
+        </div>
+        <div class="welcome-feature">
+          <span class="welcome-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
+          <span>Preise & ROI</span>
+        </div>
+        <div class="welcome-feature">
+          <span class="welcome-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <span>Tägliche Ziele</span>
+        </div>
+      </div>
+      
+      <div class="welcome-track-select">
+        <div class="welcome-track-label">Wähle deinen Track:</div>
+        <div class="welcome-tracks">
+          <button class="welcome-track selected" data-track="amy">
+            <span class="welcome-track-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg></span>
+            <span class="welcome-track-name">Amy</span>
+            <span class="welcome-track-desc">Hotels & Hospitality</span>
+          </button>
+          <button class="welcome-track" data-track="leti">
+            <span class="welcome-track-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></span>
+            <span class="welcome-track-name">Leti</span>
+            <span class="welcome-track-desc">Unis & Hochschulen</span>
+          </button>
+        </div>
+      </div>
+      
+      <button class="welcome-start" id="welcomeStart">
+        <span>Los geht's</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+      
+      <div class="welcome-footer">
+        <span>Powered by</span>
+        <span class="welcome-brand">EXTRA Group GmbH</span>
+      </div>
+    </div>
+  </div>
 
   <div class="ambient"></div>
   <div class="grain"></div>
@@ -1711,8 +3243,19 @@
           <div class="logo-sep"></div>
           <div class="logo-text">Academy</div>
         </div>
+        <!-- Global Track Switcher -->
+        <div class="global-track-switch" id="globalTrackSwitch">
+          <button class="track-toggle active" data-track="amy">
+            <span class="track-toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg></span>
+            <span class="track-toggle-label">Amy</span>
+          </button>
+          <button class="track-toggle" data-track="leti">
+            <span class="track-toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></span>
+            <span class="track-toggle-label">Leti</span>
+          </button>
+        </div>
         <div class="streak" id="streak">
-          <span>🔥</span>
+          <span class="streak-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c0 4-4 6-4 10a4 4 0 108 0c0-4-4-6-4-10z"/><path d="M12 22v-4"/></svg></span>
           <span><span id="streak-count">0</span></span>
         </div>
       </div>
@@ -1731,16 +3274,16 @@
 
         <!-- Quick Actions für Einsteiger -->
         <div class="quick-actions">
-          <button class="quick-action" onclick="switchToView('script')">
-            <span class="quick-icon">📞</span>
+          <button class="quick-action" data-goto="script">
+            <span class="quick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></span>
             <span class="quick-label">Anruf starten</span>
           </button>
-          <button class="quick-action" onclick="switchToView('learn')">
-            <span class="quick-icon">💡</span>
+          <button class="quick-action" data-goto="learn">
+            <span class="quick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
             <span class="quick-label">Produkt-Info</span>
           </button>
-          <button class="quick-action" onclick="switchToView('tools')">
-            <span class="quick-icon">✉️</span>
+          <button class="quick-action" data-goto="tools">
+            <span class="quick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></span>
             <span class="quick-label">E-Mail senden</span>
           </button>
         </div>
@@ -1782,19 +3325,19 @@
           </div>
           <div class="card">
             <div class="card-body" style="padding: 16px 20px;">
-              <div class="ritual-item" onclick="toggleRitual(this)">
+              <div class="ritual-item">
                 <div class="ritual-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                 <div class="ritual-text">Lächeln – man hört es ✨</div>
               </div>
-              <div class="ritual-item" onclick="toggleRitual(this)">
+              <div class="ritual-item">
                 <div class="ritual-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                 <div class="ritual-text">Ansprechpartner notiert</div>
               </div>
-              <div class="ritual-item" onclick="toggleRitual(this)">
+              <div class="ritual-item">
                 <div class="ritual-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                 <div class="ritual-text">Wasser griffbereit</div>
               </div>
-              <div class="ritual-item" onclick="toggleRitual(this)">
+              <div class="ritual-item">
                 <div class="ritual-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                 <div class="ritual-text">Tief durchatmen</div>
               </div>
@@ -1871,6 +3414,101 @@
           </div>
         </div>
 
+        <!-- Nach dem Nein - Mental Tipps -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">💪 Nach dem Nein</div>
+          </div>
+          
+          <div class="card mental-card">
+            <div class="card-body">
+              <div class="mental-header">
+                <span class="mental-icon">🧠</span>
+                <span class="mental-title">Reality Check</span>
+              </div>
+              <div class="mental-content">
+                <div class="mental-fact">
+                  <div class="mental-stat">93%</div>
+                  <div class="mental-desc">aller Calls enden <b>ohne</b> Termin. Das ist <b>normal</b>.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mental-tips">
+            <div class="mental-tip-card">
+              <div class="mental-tip-num">1</div>
+              <div class="mental-tip-content">
+                <div class="mental-tip-title">Das Nein gilt dem Angebot</div>
+                <div class="mental-tip-text">Nicht dir. Der Mensch kennt dich nicht.</div>
+              </div>
+            </div>
+            
+            <div class="mental-tip-card">
+              <div class="mental-tip-num">2</div>
+              <div class="mental-tip-content">
+                <div class="mental-tip-title">Jedes Nein ist Training</div>
+                <div class="mental-tip-text">Profis brauchen 100 Neins für 1 Ja. Du übst gerade.</div>
+              </div>
+            </div>
+            
+            <div class="mental-tip-card">
+              <div class="mental-tip-num">3</div>
+              <div class="mental-tip-content">
+                <div class="mental-tip-title">Nach 3 harten: Pause</div>
+                <div class="mental-tip-text">Aufstehen. Wasser. 2 Min. Dann weiter.</div>
+              </div>
+            </div>
+            
+            <div class="mental-tip-card">
+              <div class="mental-tip-num">4</div>
+              <div class="mental-tip-content">
+                <div class="mental-tip-title">Heute ≠ für immer</div>
+                <div class="mental-tip-text">In 3 Monaten: neuer Chef, neues Budget. Follow-Up!</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 16px; border-color: var(--champagne); background: var(--champagne-glow);">
+            <div class="card-body">
+              <div class="power-phrase">
+                <div class="power-phrase-label">💬 Nach jedem Nein:</div>
+                <div class="power-phrase-text">„Einer weniger bis zum Ja."</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 12px;">
+            <div class="card-header">
+              <div class="card-title">🆘 Notfall-Reset</div>
+            </div>
+            <div class="card-body">
+              <div class="emergency-list">
+                <div class="emergency-item">
+                  <span class="emergency-icon">☕</span>
+                  <span>5 Min Pause</span>
+                </div>
+                <div class="emergency-item">
+                  <span class="emergency-icon">🎧</span>
+                  <span>1 Song auf Kopfhörer</span>
+                </div>
+                <div class="emergency-item">
+                  <span class="emergency-icon">🚶</span>
+                  <span>Aufstehen, Fenster auf</span>
+                </div>
+                <div class="emergency-item">
+                  <span class="emergency-icon">📞</span>
+                  <span>Anderen Lead = frischer Start</span>
+                </div>
+                <div class="emergency-item">
+                  <span class="emergency-icon">🎯</span>
+                  <span>1 Termin = Erfolg!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- ========== LEARN VIEW ========== -->
@@ -1882,91 +3520,338 @@
           <p class="hero-sub">Verstehe das Produkt, kenne den Kunden.</p>
         </div>
 
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">Unsere Produkte</div>
+        <!-- AMY WISSEN -->
+        <div class="learn-track active" id="learn-amy">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">LEVERAGE Services</div>
+            </div>
+            <div class="product-grid">
+              <div class="product-item">
+                <div class="product-icon">📈</div>
+                <div class="product-name">Direktbuchungs-Optimierung</div>
+                <div class="product-price">Mehr Umsatz</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">🤖</div>
+                <div class="product-name">AI Concierge</div>
+                <div class="product-price">24/7 Service</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">💬</div>
+                <div class="product-name">WhatsApp Marketing</div>
+                <div class="product-price">Gäste-Kanal</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">📊</div>
+                <div class="product-name">Revenue Analytics</div>
+                <div class="product-price">Insights</div>
+              </div>
+            </div>
           </div>
-          <div class="product-grid">
-            <div class="product-item">
-              <div class="product-icon">🎀</div>
-              <div class="product-name">Premium Schärpen</div>
-              <div class="product-price">ab 29€ / Stück</div>
-            </div>
-            <div class="product-item">
-              <div class="product-icon">🎓</div>
-              <div class="product-name">Doktorhüte</div>
-              <div class="product-price">ab 10,90€</div>
-            </div>
-            <div class="product-item">
-              <div class="product-icon">👔</div>
-              <div class="product-name">Talare</div>
-              <div class="product-price">auf Anfrage</div>
-            </div>
-            <div class="product-item">
-              <div class="product-icon">✨</div>
-              <div class="product-name">Accessoires</div>
-              <div class="product-price">ab 5€</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">Warum Schärpen?</div>
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Warum LEVERAGE?</div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="response-card" style="margin-bottom: 0; cursor: default;">
+                  <div class="response-q" style="margin-bottom: 12px;">Mehr Direktbuchungen, weniger OTA-Kosten</div>
+                  <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+                    <li>Bis zu 15-20% weniger Booking.com Kommission</li>
+                    <li>AI beantwortet Gästeanfragen in Sekunden</li>
+                    <li>WhatsApp: 98% Öffnungsrate vs. 20% E-Mail</li>
+                    <li>Komplette Datenkontrolle beim Hotel</li>
+                    <li>Keine langfristigen Verträge</li>
+                    <li>ROI bereits nach 2-3 Monaten</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="card">
-            <div class="card-body">
-              <div class="response-card" style="margin-bottom: 0; cursor: default;">
-                <div class="response-q" style="margin-bottom: 12px;">Die einfachste Lösung mit größter Wirkung</div>
-                <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
-                  <li>Günstiger als komplette Talar-Ausstattung</li>
-                  <li>Absolventen tragen eigene Kleidung</li>
-                  <li>Einheitlicher Look auf allen Fotos</li>
-                  <li>Bleibt als Erinnerungsstück</li>
-                  <li>Keine Größenanpassung nötig</li>
-                  <li>CI-konform: Logo, Farben, Namen</li>
-                </ul>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">💰 Preise & ROI</div>
+            </div>
+            <div class="card" style="border-color: var(--champagne); background: var(--champagne-glow);">
+              <div class="card-body">
+                <div class="price-grid">
+                  <div class="price-item">
+                    <div class="price-label">Setup-Fee</div>
+                    <div class="price-value">ab 2.500€</div>
+                    <div class="price-note">einmalig</div>
+                  </div>
+                  <div class="price-item">
+                    <div class="price-label">Monatlich</div>
+                    <div class="price-value">ab 490€</div>
+                    <div class="price-note">je nach Umfang</div>
+                  </div>
+                  <div class="price-item">
+                    <div class="price-label">ROI Break-Even</div>
+                    <div class="price-value">~8 Wochen</div>
+                    <div class="price-note">durchschnittlich</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">🧮 ROI-Rechnung</div>
+              </div>
+              <div class="card-body">
+                <div class="roi-example">
+                  <div class="roi-line">„<b>100 Zimmer</b>, 70% Auslastung = 25.000 Nächte/Jahr"</div>
+                  <div class="roi-line">„Bei <b>120€/Nacht</b> = 3 Mio € Umsatz"</div>
+                  <div class="roi-line">„<b>40% über Booking</b> × 15% = <span class="roi-highlight">180.000€/Jahr Kommission</span>"</div>
+                  <div class="roi-divider"></div>
+                  <div class="roi-line">„<b>10% mehr Direkt</b> = 18.000€ gespart = <b>1.500€/Monat</b>"</div>
+                  <div class="roi-line">„Wir kosten <b>490€</b>. ROI: <b>3:1</b>"</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">📊 Zahlen zum Merken</div>
+              </div>
+              <div class="card-body">
+                <div class="facts-list">
+                  <div class="fact-item"><span class="fact-num">15-18%</span> Booking.com Kommission</div>
+                  <div class="fact-item"><span class="fact-num">12-15%</span> Expedia Kommission</div>
+                  <div class="fact-item"><span class="fact-num">98%</span> WhatsApp Öffnungsrate</div>
+                  <div class="fact-item"><span class="fact-num">20%</span> E-Mail Öffnungsrate</div>
+                  <div class="fact-item"><span class="fact-num">3x</span> höhere Conversion bei Direktbuchung</div>
+                  <div class="fact-item"><span class="fact-num">+23%</span> Direktbuchungen (Bayerischer Hof)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Deine Kunden</div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-avatar">👔</div>
+              <div class="persona-info">
+                <div class="persona-title">Hoteldirektor:in</div>
+                <div class="persona-desc">Entscheider, denkt in ROI, will weniger OTA-Abhängigkeit</div>
+              </div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-avatar">📊</div>
+              <div class="persona-info">
+                <div class="persona-title">Revenue Manager</div>
+                <div class="persona-desc">Zahlenorientiert, kennt die Margen, sucht Optimierung</div>
+              </div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-avatar">💼</div>
+              <div class="persona-info">
+                <div class="persona-title">Marketing-Leitung</div>
+                <div class="persona-desc">Will moderne Kanäle, interessiert an Guest Journey</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Referenz</div>
+            </div>
+            <div class="card" style="border-color: var(--accent); background: var(--accent-glow);">
+              <div class="card-body" style="text-align: center;">
+                <div style="font-size: 32px; margin-bottom: 12px;">🏨</div>
+                <div style="font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 4px;">Bayerischer Hof</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Vertraut auf unsere Direktbuchungs-Strategie</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">Deine Kunden</div>
-          </div>
-          <div class="persona-card">
-            <div class="persona-avatar">👩‍💼</div>
-            <div class="persona-info">
-              <div class="persona-title">Studiengangskoordinator:in</div>
-              <div class="persona-desc">Organisiert Events, Budget-verantwortlich, will reibungslosen Ablauf</div>
+        <!-- LETI WISSEN -->
+        <div class="learn-track" id="learn-leti">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Unsere Produkte</div>
+            </div>
+            <div class="product-grid">
+              <div class="product-item">
+                <div class="product-icon">🎀</div>
+                <div class="product-name">Premium Schärpen</div>
+                <div class="product-price">ab 29€ / Stück</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">🎓</div>
+                <div class="product-name">Doktorhüte</div>
+                <div class="product-price">ab 10,90€</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">👔</div>
+                <div class="product-name">Talare</div>
+                <div class="product-price">auf Anfrage</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">✨</div>
+                <div class="product-name">Accessoires</div>
+                <div class="product-price">ab 5€</div>
+              </div>
             </div>
           </div>
-          <div class="persona-card">
-            <div class="persona-avatar">🎓</div>
-            <div class="persona-info">
-              <div class="persona-title">Fachschaftsleitung</div>
-              <div class="persona-desc">Student:in, engagiert, sucht Sponsoren, will unvergessliche Feier</div>
-            </div>
-          </div>
-          <div class="persona-card">
-            <div class="persona-avatar">🏛️</div>
-            <div class="persona-info">
-              <div class="persona-title">Dekanat / Verwaltung</div>
-              <div class="persona-desc">Entscheidet über größere Budgets, denkt langfristig, will Prestige</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">Referenz</div>
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Warum Schärpen?</div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="response-card" style="margin-bottom: 0; cursor: default;">
+                  <div class="response-q" style="margin-bottom: 12px;">Die einfachste Lösung mit größter Wirkung</div>
+                  <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+                    <li>Günstiger als komplette Talar-Ausstattung</li>
+                    <li>Absolventen tragen eigene Kleidung</li>
+                    <li>Einheitlicher Look auf allen Fotos</li>
+                    <li>Bleibt als Erinnerungsstück</li>
+                    <li>Keine Größenanpassung nötig</li>
+                    <li>CI-konform: Logo, Farben, Namen</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="card" style="border-color: var(--gold); background: var(--gold-glow);">
-            <div class="card-body" style="text-align: center;">
-              <div style="font-size: 32px; margin-bottom: 12px;">🏛️</div>
-              <div style="font-size: 16px; font-weight: 600; color: var(--gold-light); margin-bottom: 4px;">TU München</div>
-              <div style="font-size: 12px; color: var(--text-muted);">Nutzt unsere Schärpen für ihre Graduierungen</div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">💰 Preise & Staffeln</div>
+            </div>
+            <div class="card" style="border-color: var(--purple); background: var(--purple-glow);">
+              <div class="card-body">
+                <div class="price-table">
+                  <div class="price-table-header">
+                    <span>Qualität</span>
+                    <span>1-49 Stk.</span>
+                    <span>50-99</span>
+                    <span>100+</span>
+                  </div>
+                  <div class="price-table-row">
+                    <span class="price-table-label">BASIS</span>
+                    <span>39€</span>
+                    <span>34€</span>
+                    <span>29€</span>
+                  </div>
+                  <div class="price-table-row highlight">
+                    <span class="price-table-label">PREMIUM</span>
+                    <span>49€</span>
+                    <span>44€</span>
+                    <span>39€</span>
+                  </div>
+                  <div class="price-table-row">
+                    <span class="price-table-label">EXKLUSIV</span>
+                    <span>69€</span>
+                    <span>59€</span>
+                    <span>49€</span>
+                  </div>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 12px; text-align: center;">
+                  Alle Preise zzgl. MwSt. • Versand ab 50 Stk. kostenlos
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">🏦 Wer zahlt? (Finanzierungswege)</div>
+              </div>
+              <div class="card-body">
+                <div class="funding-options">
+                  <div class="funding-item">
+                    <div class="funding-icon">🏛️</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Hochschule / Dekanat</div>
+                      <div class="funding-desc">Bei offiziellen Feiern, Jubiläen, Prestigeprojekten</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">👥</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Fachschaft</div>
+                      <div class="funding-desc">Aus Semesterbeiträgen oder Event-Budget</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🎓</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Absolventen selbst</div>
+                      <div class="funding-desc">30-50€ für ein Erinnerungsstück = akzeptiert</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🤝</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Sponsoring / Alumni</div>
+                      <div class="funding-desc">Firmen sponsern für Logo-Präsenz</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">📊 Zahlen zum Merken</div>
+              </div>
+              <div class="card-body">
+                <div class="facts-list">
+                  <div class="fact-item"><span class="fact-num purple">4-6</span> Wochen Produktionszeit</div>
+                  <div class="fact-item"><span class="fact-num purple">150+</span> Farben verfügbar</div>
+                  <div class="fact-item"><span class="fact-num purple">100%</span> Polyester-Satin (knitterfrei)</div>
+                  <div class="fact-item"><span class="fact-num purple">180cm</span> Standardlänge</div>
+                  <div class="fact-item"><span class="fact-num purple">10cm</span> Standardbreite</div>
+                  <div class="fact-item"><span class="fact-num purple">TUM</span> = Bekannteste Referenz</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Deine Kunden</div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-avatar">👩‍💼</div>
+              <div class="persona-info">
+                <div class="persona-title">Studiengangskoordinator:in</div>
+                <div class="persona-desc">Organisiert Events, Budget-verantwortlich, will reibungslosen Ablauf</div>
+              </div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-avatar">🎓</div>
+              <div class="persona-info">
+                <div class="persona-title">Fachschaftsleitung</div>
+                <div class="persona-desc">Student:in, engagiert, sucht Sponsoren, will unvergessliche Feier</div>
+              </div>
+            </div>
+            <div class="persona-card">
+              <div class="persona-avatar">🏛️</div>
+              <div class="persona-info">
+                <div class="persona-title">Dekanat / Verwaltung</div>
+                <div class="persona-desc">Entscheidet über größere Budgets, denkt langfristig, will Prestige</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Referenz</div>
+            </div>
+            <div class="card" style="border-color: var(--purple); background: var(--purple-glow);">
+              <div class="card-body" style="text-align: center;">
+                <div style="font-size: 32px; margin-bottom: 12px;">🏛️</div>
+                <div style="font-size: 16px; font-weight: 600; color: var(--purple); margin-bottom: 4px;">TU München</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Nutzt unsere Schärpen für ihre Graduierungen</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1982,8 +3867,8 @@
         </div>
 
         <div class="track-tabs">
-          <button class="track-tab active" data-track="amy">🏨 Amy · Hotels</button>
-          <button class="track-tab purple" data-track="leti">🎓 Leti · Unis</button>
+          <button class="track-tab active" data-track="amy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;margin-right:6px;vertical-align:-2px;"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg>Amy · Hotels</button>
+          <button class="track-tab purple" data-track="leti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;margin-right:6px;vertical-align:-2px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg>Leti · Unis</button>
         </div>
 
         <!-- AMY TRACK -->
@@ -2088,19 +3973,192 @@
 
           <div class="section">
             <div class="section-header">
-              <div class="section-title">Einwände</div>
+              <div class="section-title">🚪 Gatekeeper überwinden</div>
+            </div>
+            <div class="card">
+              <div class="card-body" style="padding: 16px 20px;">
+                <div class="gatekeeper-intro">Die Sekretärin filtert – sei freundlich, bestimmt, gib ihr einen Grund zu helfen.</div>
+              </div>
+            </div>
+            
+            <div class="response-card" style="margin-top: 12px;">
+              <div class="response-q">„Worum geht es?"</div>
+              <div class="response-a">„Um Direktbuchungen – er erwartet mich nicht, aber es geht um <b>bares Geld</b>. 2 Minuten."</div>
+              <div class="response-tip">💡 Ehrlich + Dringlichkeit</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Der ist im Meeting."</div>
+              <div class="response-a">„Verstehe! <b>Wann endet es?</b> Dann versuche ich's nochmal."</div>
+              <div class="response-tip">💡 Konkrete Zeit = nächster Versuch</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Schicken Sie eine E-Mail."</div>
+              <div class="response-a">„Gern! Wie ist die <b>direkte E-Mail</b>? Ich melde mich morgen nochmal."</div>
+              <div class="response-tip">💡 E-Mail + Anruf kombinieren</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Der ruft nicht zurück."</div>
+              <div class="response-a">„Kein Problem! <b>Wann ist er am besten erreichbar</b> – früh oder spät?"</div>
+              <div class="response-tip">💡 Beste Zeit erfragen</div>
             </div>
             <div class="response-card">
               <div class="response-q">„Kein Interesse."</div>
+              <div class="response-a">„Verstehe – aber <b>wer entscheidet das?</b> Vielleicht ist's für Marketing relevant."</div>
+              <div class="response-tip">💡 Sekretärin ≠ Entscheider</div>
+            </div>
+            
+            <div class="card" style="margin-top: 16px; border-color: var(--champagne); background: var(--champagne-glow);">
+              <div class="card-body" style="padding: 16px 20px;">
+                <div class="gatekeeper-protip">
+                  <b>🎯 3 Gold-Tipps:</b><br>
+                  • <b>Vor 9 / nach 17 Uhr</b> – Chef geht selbst ran<br>
+                  • <b>Namen nutzen</b> – „Frau Müller, könnten Sie..."<br>
+                  • <b>Verbündete machen</b> – „Vielleicht können Sie mir helfen..."
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Einwände meistern</div>
+            </div>
+            
+            <!-- Kategorie: Kein Interesse -->
+            <div class="response-card">
+              <div class="response-q">„Kein Interesse."</div>
               <div class="response-a">„Verstehe! Liegt's am Thema – oder passt der Zeitpunkt nicht?"</div>
+              <div class="response-tip">💡 Trenne: Echtes Nein ≠ schlechter Moment</div>
             </div>
             <div class="response-card">
               <div class="response-q">„Schicken Sie Unterlagen."</div>
-              <div class="response-a">„Gerne! Was ist wichtiger – mehr Buchungen oder weniger Aufwand?"</div>
+              <div class="response-a">„Mach ich! Kurz: Geht's eher um <b>mehr Umsatz</b> oder <b>weniger Aufwand</b>?"</div>
+              <div class="response-tip">💡 Nie auflegen ohne 1 Info zu gewinnen</div>
             </div>
             <div class="response-card">
-              <div class="response-q">„Keine Zeit."</div>
-              <div class="response-a">„Verstehe! Nächste Woche oder nach dem Monatswechsel?"</div>
+              <div class="response-q">„Keine Zeit gerade."</div>
+              <div class="response-a">„Verstehe! Passt nächste Woche besser – oder nach dem Monatswechsel?"</div>
+              <div class="response-tip">💡 2 Optionen = leichtere Entscheidung</div>
+            </div>
+            
+            <!-- Kategorie: Wettbewerb -->
+            <div class="response-card">
+              <div class="response-q">„Wir arbeiten mit Booking/HRS."</div>
+              <div class="response-a">„Genau deshalb! Wir <b>reduzieren</b> OTA-Abhängigkeit. Wie hoch ist Ihre Direktquote?"</div>
+              <div class="response-tip">💡 Frage stellen = Gespräch geht weiter</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Haben schon Marketing-Partner."</div>
+              <div class="response-a">„Top! Wir ergänzen – speziell <b>WhatsApp & AI</b>. Nutzen Sie das bereits?"</div>
+              <div class="response-tip">💡 Spezialist, nicht Konkurrent</div>
+            </div>
+            
+            <!-- Kategorie: Entscheidung -->
+            <div class="response-card">
+              <div class="response-q">„Entscheidet die Zentrale."</div>
+              <div class="response-a">„Verstehe! Haben einzelne Häuser Spielraum? Wir starten oft mit einem <b>Pilot</b>."</div>
+              <div class="response-tip">💡 Pilot = kleines Risiko, großer Fuß in der Tür</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Muss ich mit Chef besprechen."</div>
+              <div class="response-a">„Klar! Soll ich kurz dabei sein? Dann kann ich <b>direkt antworten</b>."</div>
+              <div class="response-tip">💡 Hilf dem Mittelsmann, dich zu verkaufen</div>
+            </div>
+            
+            <!-- Kategorie: Timing -->
+            <div class="response-card">
+              <div class="response-q">„In 3 Monaten nochmal."</div>
+              <div class="response-a">„Mach ich! Was müsste sich bis dahin ändern, damit es passt?"</div>
+              <div class="response-tip">💡 Qualifiziere jetzt für später</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Haben gerade Hauptsaison."</div>
+              <div class="response-a">„Umso besser! Jede Direktbuchung zählt jetzt <b>doppelt</b>. 15 Min nach der Saison?"</div>
+              <div class="response-tip">💡 Saison = Dringlichkeit, keine Ausrede</div>
+            </div>
+            
+            <!-- Kategorie: Preis -->
+            <div class="response-card">
+              <div class="response-q">„Was kostet das?"</div>
+              <div class="response-a">„Kommt drauf an – aber: Wir sparen mehr als wir kosten. <b>Ab Woche 1.</b> Soll ich's durchrechnen?"</div>
+              <div class="response-tip">💡 Preis nie isoliert – immer als ROI</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Zu teuer / Kein Budget."</div>
+              <div class="response-a">„Verstehe. Die Frage ist: Was kostet <b>Nichtstun</b>? Bei 15% Booking-Kommission..."</div>
+              <div class="response-tip">💡 Zeige Opportunitätskosten auf</div>
+            </div>
+            
+            <!-- Kategorie: Skepsis -->
+            <div class="response-card">
+              <div class="response-q">„Funktioniert das wirklich?"</div>
+              <div class="response-a">„Bayerischer Hof: <b>+23% Direktbuchungen</b>. Soll ich den Case zeigen?"</div>
+              <div class="response-tip">💡 Konkrete Zahl > vage Versprechen</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">🔄 Follow-Up Scripts</div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">2. Anruf (Tag 3)</div>
+              </div>
+              <div class="card-body">
+                <div class="followup-script">
+                  <div class="followup-line">„Hier nochmal <b>Amy von LEVERAGE</b>."</div>
+                  <div class="followup-line">„Ich hatte wegen <b>Direktbuchungen</b> angerufen."</div>
+                  <div class="followup-line highlight">„Haben Sie <b>5 Minuten</b>?"</div>
+                </div>
+                <div class="followup-tip">
+                  <b>Bei "Worum ging's?":</b> „Um weniger Booking-Kosten. Ich hab Ihre Website angeschaut – es gibt konkrete Ansätze."
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">3. Anruf (Tag 7)</div>
+              </div>
+              <div class="card-body">
+                <div class="followup-script">
+                  <div class="followup-line">„Amy nochmal – <b>letzter Versuch</b>, versprochen!"</div>
+                  <div class="followup-line highlight">„Ist Direktbuchung gerade Thema – oder soll ich in <b>3 Monaten</b> anklopfen?"</div>
+                </div>
+                <div class="followup-tip">
+                  <b>Warum's funktioniert:</b> „Letzter Versuch" nimmt Druck. Nur 2 Optionen – beide führen zu Ergebnis.
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">Nach E-Mail (Tag 5)</div>
+              </div>
+              <div class="card-body">
+                <div class="followup-script">
+                  <div class="followup-line">„Kurz nachfragen: Ist meine <b>E-Mail angekommen</b>?"</div>
+                  <div class="followup-line highlight">„10 Minuten zusammen durchgehen?"</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px; border-color: var(--champagne); background: var(--champagne-glow);">
+              <div class="card-body">
+                <div class="followup-cadence">
+                  <div class="cadence-title">📅 Deine Cadence</div>
+                  <div class="cadence-timeline">
+                    <div class="cadence-item"><span class="cadence-day">Tag 1</span> Erstanruf + Voicemail</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 3</span> 2. Anruf (andere Uhrzeit)</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 5</span> E-Mail mit Analyse</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 7</span> 3. Anruf („letzter Versuch")</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 14</span> LinkedIn Connect</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 30</span> Neuer Aufhänger</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2208,19 +4266,191 @@
 
           <div class="section">
             <div class="section-header">
-              <div class="section-title">Einwände</div>
+              <div class="section-title">🚪 Gatekeeper überwinden</div>
+            </div>
+            <div class="card">
+              <div class="card-body" style="padding: 16px 20px;">
+                <div class="gatekeeper-intro">Unis filtern viel. Sei höflich, klar – zeige, dass du <b>hilfst</b>, nicht verkaufst.</div>
+              </div>
+            </div>
+            
+            <div class="response-card" style="margin-top: 12px;">
+              <div class="response-q">„Worum geht es?"</div>
+              <div class="response-a">„Um die Abschlussfeier – wir arbeiten mit der <b>TUM</b> und wollten ein Angebot machen."</div>
+              <div class="response-tip">💡 TUM-Referenz = Türöffner</div>
             </div>
             <div class="response-card">
-              <div class="response-q">„Kein Budget."</div>
-              <div class="response-a">„Manchmal zahlt die Hochschule, manchmal die Fachschaft. Wie läuft das bei Ihnen?"</div>
+              <div class="response-q">„Studiendekan nicht da."</div>
+              <div class="response-a">„Kein Problem! <b>Wann erreiche ich ihn?</b> Oder wer macht Veranstaltungen?"</div>
+              <div class="response-tip">💡 Alternative erfragen</div>
             </div>
+            <div class="response-card">
+              <div class="response-q">„E-Mail ans Dekanat."</div>
+              <div class="response-a">„Gern! Wie ist die <b>direkte E-Mail</b>? Und an wen – damit's nicht untergeht."</div>
+              <div class="response-tip">💡 Name + direkte Adresse holen</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Sache der Fachschaft."</div>
+              <div class="response-a">„Perfekt! <b>Haben Sie einen Kontakt dort?</b> Oder eine E-Mail?"</div>
+              <div class="response-tip">💡 Weiterleitung = Erfolg</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Nicht zuständig."</div>
+              <div class="response-a">„Verstehe! <b>Wer wäre zuständig</b> für Abschlussfeiern?"</div>
+              <div class="response-tip">💡 Immer nach dem Richtigen fragen</div>
+            </div>
+            
+            <div class="card" style="margin-top: 16px; border-color: var(--purple); background: var(--purple-glow);">
+              <div class="card-body" style="padding: 16px 20px;">
+                <div class="gatekeeper-protip">
+                  <b>🎯 3 Uni-Tipps:</b><br>
+                  • <b>Di–Do</b> sind die besten Tage<br>
+                  • <b>Prüfungsamt</b> als Alternative zum Dekanat<br>
+                  • <b>Fachschaften</b> leichter erreichbar als Profs
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Einwände meistern</div>
+            </div>
+            
+            <!-- Kategorie: Kein Bedarf -->
             <div class="response-card">
               <div class="response-q">„Brauchen wir nicht."</div>
-              <div class="response-a">„Die TUM hat auch lange ohne gemacht – und sich dann bewusst dafür entschieden."</div>
+              <div class="response-a">„Die TUM dachte auch so – bis sie die <b>Fotos</b> sahen. Der Unterschied ist enorm."</div>
+              <div class="response-tip">💡 Andere waren auch skeptisch – und haben sich umentschieden</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Machen wir seit Jahren ohne."</div>
+              <div class="response-a">„Viele starten erst jetzt – weil <b>Absolventen mehr erwarten</b>. Was hören Sie von Studierenden?"</div>
+              <div class="response-tip">💡 Trend aufzeigen, nicht kritisieren</div>
             </div>
             <div class="response-card">
               <div class="response-q">„Wirkt zu amerikanisch."</div>
-              <div class="response-a">„Genau deshalb Schärpen statt Talare! Würdig, aber ohne Dresscode-Zwang."</div>
+              <div class="response-a">„Deshalb Schärpen! <b>Würdig, aber ohne Dresscode-Zwang.</b> Sehr europäisch."</div>
+              <div class="response-tip">💡 Schärpen = die deutsche Alternative</div>
+            </div>
+            
+            <!-- Kategorie: Budget -->
+            <div class="response-card">
+              <div class="response-q">„Kein Budget."</div>
+              <div class="response-a">„Verstehe! Manchmal zahlt die Hochschule, manchmal die Fachschaft, oft die <b>Absolventen selbst</b>. Wie läuft das bei Ihnen?"</div>
+              <div class="response-tip">💡 Es gibt immer einen Weg – finde ihn</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Zu teuer für uns."</div>
+              <div class="response-a">„<b>Ab 29€</b> pro Stück. Wenn Absolventen selbst zahlen: 30€ für ein Erinnerungsstück fürs Leben?"</div>
+              <div class="response-tip">💡 Preis pro Person – nicht Gesamtkosten</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Budget schon verplant."</div>
+              <div class="response-a">„Verstehe. <b>Wann wird fürs nächste Jahr geplant?</b> Dann melde ich mich rechtzeitig."</div>
+              <div class="response-tip">💡 Follow-Up sichern, nicht aufgeben</div>
+            </div>
+            
+            <!-- Kategorie: Zuständigkeit -->
+            <div class="response-card">
+              <div class="response-q">„Das macht die Fachschaft."</div>
+              <div class="response-a">„Perfekt! <b>Wer ist dort zuständig?</b> Meistens Finanz oder Events."</div>
+              <div class="response-tip">💡 Weiterleitung = Erfolg, kein Nein</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Studenten organisieren selbst."</div>
+              <div class="response-a">„Super! Ein <b>kostenloser Designvorschlag</b> hilft bei der Entscheidung. Wen spreche ich an?"</div>
+              <div class="response-tip">💡 Biete Mehrwert, der Arbeit abnimmt</div>
+            </div>
+            
+            <!-- Kategorie: Timing -->
+            <div class="response-card">
+              <div class="response-q">„Feier erst in 8 Monaten."</div>
+              <div class="response-a">„Ideal! Genug Zeit für <b>Design & Produktion</b>. Soll ich schon mal einen Entwurf machen?"</div>
+              <div class="response-tip">💡 Früh = entspannt, nicht "zu früh"</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Nächstes Semester melden."</div>
+              <div class="response-a">„Mach ich! Kurz: Plant ihr <b>grundsätzlich sowas</b> – oder eher nicht?"</div>
+              <div class="response-tip">💡 Qualifiziere: Echtes Interesse oder Abwimmeln?</div>
+            </div>
+            
+            <!-- Kategorie: Skepsis -->
+            <div class="response-card">
+              <div class="response-q">„Wann Lieferung möglich?"</div>
+              <div class="response-a">„<b>4-6 Wochen</b> nach Designfreigabe. Bei Eile auch schneller. Wann ist eure Feier?"</div>
+              <div class="response-tip">💡 Flexibilität zeigen, Termin erfragen</div>
+            </div>
+            <div class="response-card">
+              <div class="response-q">„Wie sieht das aus?"</div>
+              <div class="response-a">„Ich schick <b>TUM-Beispielbilder</b> + kostenlosen Designentwurf. Welche Farben hat eure Fakultät?"</div>
+              <div class="response-tip">💡 Visualisierung schafft Begehrlichkeit</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">🔄 Follow-Up Scripts</div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">2. Anruf (Tag 3-5)</div>
+              </div>
+              <div class="card-body">
+                <div class="followup-script purple">
+                  <div class="followup-line">„Hier nochmal <b>Leti von College Fashion</b>."</div>
+                  <div class="followup-line">„Ich hatte wegen <b>Schärpen</b> angerufen."</div>
+                  <div class="followup-line highlight">„War ich bei der richtigen Person – oder wer wäre besser?"</div>
+                </div>
+                <div class="followup-tip purple">
+                  <b>Bei Fachschaft-Verweis:</b> „Perfekt! Haben Sie Kontaktdaten? Melde mich dort."
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">3. Anruf (Tag 7-10)</div>
+              </div>
+              <div class="card-body">
+                <div class="followup-script purple">
+                  <div class="followup-line">„Leti nochmal – <b>kurz nachfragen</b>:"</div>
+                  <div class="followup-line highlight">„Sind Schärpen für die nächste Feier interessant – <b>ja oder nein</b>?"</div>
+                </div>
+                <div class="followup-tip purple">
+                  <b>Warum's funktioniert:</b> Direkte Frage = klare Antwort. Beides spart Zeit.
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">Nach Designvorschlag</div>
+              </div>
+              <div class="card-body">
+                <div class="followup-script purple">
+                  <div class="followup-line">„Ist der <b>Designvorschlag</b> angekommen?"</div>
+                  <div class="followup-line highlight">„Soll ich ein <b>Muster</b> zum Anfassen schicken?"</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px; border-color: var(--purple); background: var(--purple-glow);">
+              <div class="card-body">
+                <div class="followup-cadence purple">
+                  <div class="cadence-title">📅 Uni-Cadence</div>
+                  <div class="cadence-timeline">
+                    <div class="cadence-item"><span class="cadence-day">Tag 1</span> Erstanruf + Voicemail</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 5</span> 2. Anruf (andere Person?)</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 7</span> E-Mail mit TUM-Bildern</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 14</span> 3. Anruf + Designvorschlag</div>
+                    <div class="cadence-item"><span class="cadence-day">Tag 30</span> Fachschaft direkt</div>
+                    <div class="cadence-item"><span class="cadence-day">+6 Mon.</span> Neues Semester</div>
+                  </div>
+                  <div class="cadence-note">Unis brauchen 2-3 Monate – Geduld!</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2236,17 +4466,105 @@
           <h1 class="hero-title">Deine Werkzeuge</h1>
         </div>
 
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">📧 Angebots-E-Mail (Schärpen)</div>
-          </div>
-          <div class="angebot-card" id="angebot-template">
-            <div class="angebot-header">
-              <div class="card-title">Nach dem Erstgespräch</div>
-              <button class="copy-btn" data-copy="angebot-template">Kopieren</button>
+        <!-- AMY TOOLS -->
+        <div class="tools-track active" id="tools-amy">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">📧 Angebots-E-Mail (Hotels)</div>
             </div>
-            <div class="angebot-body">
-              <div class="angebot-text">Betreff: Designvorschlag Schärpen – [Hochschule]
+            <div class="angebot-card" id="angebot-hotel">
+              <div class="angebot-header">
+                <div class="card-title">Nach dem Erstgespräch</div>
+                <button class="copy-btn" data-copy="angebot-hotel">Kopieren</button>
+              </div>
+              <div class="angebot-body">
+                <div class="angebot-text">Betreff: Direktbuchungs-Analyse für [Hotel] – Ihre Potenziale
+
+Guten Tag [Anrede] [Name],
+
+vielen Dank für das aufschlussreiche Gespräch!
+
+Wie besprochen sende ich Ihnen unsere <b>kostenlose Erstanalyse</b> Ihrer aktuellen Direktbuchungs-Performance.
+
+<b>Was wir uns anschauen:</b>
+• Ihre aktuelle OTA vs. Direkt-Quote
+• Website-Conversion-Potenzial
+• WhatsApp-Readiness Check
+• Quick Wins für sofortige Umsetzung
+
+<b>Unser Ansatz:</b>
+1. Analyse (kostenlos, unverbindlich)
+2. Präsentation der Ergebnisse
+3. Konkrete Handlungsempfehlungen
+4. Optionale Umsetzungsbegleitung
+
+<b>Referenz:</b> Der Bayerische Hof konnte seine Direktbuchungsrate um 23% steigern.
+
+<b>Unsere Services:</b>
+• Direktbuchungs-Optimierung
+• AI Concierge (24/7 Gästekommunikation)
+• WhatsApp Marketing Setup
+• Revenue Analytics Dashboard
+
+Ich freue mich auf Ihre Rückmeldung!
+
+Herzliche Grüße
+[Dein Name]
+
+LEVERAGE Strategies
+Ein Geschäftsbereich der EXTRA Group GmbH
+www.leverage-strategies.com</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">📧 Termin-Bestätigung</div>
+            </div>
+            <div class="email-card" id="email-termin-hotel">
+              <div class="email-header">
+                <div class="email-title">✉️ Nach Terminvereinbarung</div>
+                <button class="copy-btn" data-copy="email-termin-hotel" style="padding: 7px 11px;">Kopieren</button>
+              </div>
+              <div class="email-body">Betreff: Unser Termin am [Datum] – Direktbuchungs-Analyse ✓
+
+Hallo [Name],
+
+freue mich auf unser Gespräch!
+📅 [Datum] um [Uhrzeit] – ca. 20 Min.
+
+Ich zeige Ihnen konkrete Ansätze, wie [Hotel] mehr Direktbuchungen generieren kann – mit Zahlen aus vergleichbaren Häusern.
+
+Bis dann!
+[Dein Name]</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">📱 Voicemail</div>
+            </div>
+            <div class="voicemail">
+              <div class="voicemail-title">Falls Anrufbeantworter</div>
+              <div class="voicemail-text">„Hallo, hier ist [Name] von LEVERAGE Strategies. Wir unterstützen Hotels wie den Bayerischen Hof bei Direktbuchungen. Ich melde mich morgen nochmal – oder Sie erreichen mich unter [Nummer]. Schönen Tag!"</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LETI TOOLS -->
+        <div class="tools-track" id="tools-leti">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">📧 Angebots-E-Mail (Schärpen)</div>
+            </div>
+            <div class="angebot-card" id="angebot-template">
+              <div class="angebot-header">
+                <div class="card-title">Nach dem Erstgespräch</div>
+                <button class="copy-btn" data-copy="angebot-template">Kopieren</button>
+              </div>
+              <div class="angebot-body">
+                <div class="angebot-text">Betreff: Designvorschlag Schärpen – [Hochschule]
 
 Guten Tag [Anrede] [Name],
 
@@ -2284,20 +4602,20 @@ Herzliche Grüße
 College Fashion
 Ein Geschäftsbereich der EXTRA Group GmbH
 www.college-fashion.de</div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">📧 Termin-Bestätigung</div>
-          </div>
-          <div class="email-card" id="email-termin">
-            <div class="email-header">
-              <div class="email-title">✉️ Nach Terminvereinbarung</div>
-              <button class="copy-btn" data-copy="email-termin" style="padding: 7px 11px;">Kopieren</button>
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">📧 Termin-Bestätigung</div>
             </div>
-            <div class="email-body">Betreff: Unser Termin am [Datum] ✓
+            <div class="email-card" id="email-termin">
+              <div class="email-header">
+                <div class="email-title">✉️ Nach Terminvereinbarung</div>
+                <button class="copy-btn" data-copy="email-termin" style="padding: 7px 11px;">Kopieren</button>
+              </div>
+              <div class="email-body">Betreff: Unser Termin am [Datum] ✓
 
 Hallo [Name],
 
@@ -2308,19 +4626,21 @@ Ich zeige Ihnen, wie andere Hochschulen ihre Graduierung aufwerten.
 
 Bis dann!
 [Dein Name]</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">📱 Voicemail</div>
+            </div>
+            <div class="voicemail">
+              <div class="voicemail-title">Falls Anrufbeantworter</div>
+              <div class="voicemail-text">„Hallo, hier ist [Name] von College Fashion. Wir arbeiten mit der TU München bei Graduierungen zusammen. Ich melde mich morgen nochmal – oder Sie erreichen mich unter [Nummer]. Schönen Tag!"</div>
+            </div>
           </div>
         </div>
 
-        <div class="section">
-          <div class="section-header">
-            <div class="section-title">📱 Voicemail</div>
-          </div>
-          <div class="voicemail">
-            <div class="voicemail-title">Falls Anrufbeantworter</div>
-            <div class="voicemail-text">„Hallo, hier ist [Name] von College Fashion. Wir arbeiten mit der TU München bei Graduierungen zusammen. Ich melde mich morgen nochmal – oder Sie erreichen mich unter [Nummer]. Schönen Tag!"</div>
-          </div>
-        </div>
-
+        <!-- Shared Follow-Up -->
         <div class="section">
           <div class="section-header">
             <div class="section-title">📅 Follow-Up Cadence</div>
@@ -2361,26 +4681,26 @@ Bis dann!
     <nav class="bottom-nav">
       <div class="nav-inner">
         <button class="nav-item active" data-view="home">
-          <span class="nav-icon">🏠</span>
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>
           <span class="nav-label">Home</span>
         </button>
         <button class="nav-item" data-view="learn">
-          <span class="nav-icon">📚</span>
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h5"/></svg></span>
           <span class="nav-label">Wissen</span>
         </button>
         <button class="nav-item" data-view="script">
-          <span class="nav-icon">📞</span>
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></span>
           <span class="nav-label">Skripte</span>
         </button>
         <button class="nav-item" data-view="tools">
-          <span class="nav-icon">🛠️</span>
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></span>
           <span class="nav-label">Vorlagen</span>
         </button>
       </div>
     </nav>
 
     <!-- AI Assistant Button -->
-    <button class="ai-btn" onclick="openChat()">
+    <button class="ai-btn" id="aiBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"></path>
         <circle cx="8" cy="14" r="1"></circle>
@@ -2391,8 +4711,8 @@ Bis dann!
     </button>
 
     <!-- Chat Panel Overlay -->
-    <div class="chat-overlay" id="chatOverlay" onclick="closeChat(event)">
-      <div class="chat-panel" onclick="event.stopPropagation()">
+    <div class="chat-overlay" id="chatOverlay">
+      <div class="chat-panel" id="chatPanel">
         <div class="chat-header">
           <div class="chat-header-title">
             <div class="chat-header-icon" id="chatIcon">🏨</div>
@@ -2401,7 +4721,7 @@ Bis dann!
               <span>Online</span>
             </div>
           </div>
-          <button class="chat-close" onclick="closeChat()">
+          <button class="chat-close" id="chatClose">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -2424,7 +4744,7 @@ Bis dann!
     </div>
 
     <!-- FAB -->
-    <button class="fab" id="fab" onclick="logCall()">
+    <button class="fab" id="fab">
       <div class="fab-pulse"></div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
@@ -2502,31 +4822,89 @@ Bis dann!
       });
     });
 
-    // ========== TRACK TABS ==========
+    // ========== GLOBAL TRACK SWITCH ==========
+    let currentTrack = 'amy';
+
+    function switchGlobalTrack(trackId) {
+      currentTrack = trackId;
+      
+      // Update global switcher in header
+      document.querySelectorAll('.track-toggle').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.track-toggle[data-track="${trackId}"]`).classList.add('active');
+      
+      // Update track tabs in script view
+      document.querySelectorAll('.track-tab').forEach(t => t.classList.remove('active'));
+      const activeTab = document.querySelector(`.track-tab[data-track="${trackId}"]`);
+      if (activeTab) activeTab.classList.add('active');
+      
+      // Update script tracks
+      document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
+      const scriptTrack = document.getElementById('track-' + trackId);
+      if (scriptTrack) scriptTrack.classList.add('active');
+      
+      // Update learn tracks
+      document.querySelectorAll('.learn-track').forEach(t => t.classList.remove('active'));
+      const learnTrack = document.getElementById('learn-' + trackId);
+      if (learnTrack) learnTrack.classList.add('active');
+      
+      // Update tools tracks
+      document.querySelectorAll('.tools-track').forEach(t => t.classList.remove('active'));
+      const toolsTrack = document.getElementById('tools-' + trackId);
+      if (toolsTrack) toolsTrack.classList.add('active');
+      
+      // Update chat config
+      updateChatConfig(trackId);
+      
+      // Save preference
+      localStorage.setItem('selectedTrack', trackId);
+      
+      // Show toast
+      const trackName = trackId === 'amy' ? '🏨 Amy · Hotels' : '🎓 Leti · Unis';
+      showToast('Track gewechselt: ' + trackName);
+    }
+
+    // Global track switcher event listeners
+    document.querySelectorAll('.track-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        switchGlobalTrack(toggle.dataset.track);
+      });
+    });
+
+    // Track tabs in script view also switch globally
     document.querySelectorAll('.track-tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        const trackId = tab.dataset.track;
-        
-        document.querySelectorAll('.track-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        
-        document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
-        document.getElementById('track-' + trackId).classList.add('active');
+        switchGlobalTrack(tab.dataset.track);
+      });
+    });
+
+    // Load saved track preference
+    const savedTrack = localStorage.getItem('selectedTrack');
+    if (savedTrack) {
+      switchGlobalTrack(savedTrack);
+    }
+
+    // ========== QUICK ACTIONS ==========
+    document.querySelectorAll('.quick-action').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const viewId = btn.dataset.goto;
+        if (viewId) switchToView(viewId);
       });
     });
 
     // ========== RITUAL ==========
-    function toggleRitual(item) {
-      item.classList.toggle('done');
-      const all = document.querySelectorAll('.ritual-item');
-      const done = document.querySelectorAll('.ritual-item.done').length;
-      document.getElementById('ritual-status').textContent = `${done}/${all.length}`;
-      
-      if (done === all.length) {
-        showToast('Ritual komplett! Los geht\'s ✨');
-        triggerConfetti();
-      }
-    }
+    document.querySelectorAll('.ritual-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('done');
+        const all = document.querySelectorAll('.ritual-item');
+        const done = document.querySelectorAll('.ritual-item.done').length;
+        document.getElementById('ritual-status').textContent = `${done}/${all.length}`;
+        
+        if (done === all.length) {
+          showToast('Ritual komplett! Los geht\'s ✨');
+          triggerConfetti();
+        }
+      });
+    });
 
     // ========== CALLS ==========
     function logCall() {
@@ -2582,6 +4960,9 @@ Bis dann!
       
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById('view-' + viewId).classList.add('active');
+      
+      // Scroll to top smoothly
+      document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function saveStats() {
@@ -2657,7 +5038,7 @@ Bis dann!
         ]
       },
       leti: {
-        url: 'https://college-fashion.de/#chatbot',
+        url: 'https://1fejsj-td.myshopify.com',
         icon: '🎓',
         title: 'College Fashion Berater',
         btnText: 'Frag CF',
@@ -2682,7 +5063,7 @@ Bis dann!
       
       const hintsContainer = document.getElementById('chatHints');
       hintsContainer.innerHTML = config.hints.map(h => 
-        `<div class="chat-hint" onclick="askHint('${h.text}')">${h.emoji} ${h.text}</div>`
+        `<div class="chat-hint" data-hint="${h.text}">${h.emoji} ${h.text}</div>`
       ).join('');
     }
 
@@ -2715,15 +5096,73 @@ Bis dann!
       if (e.key === 'Escape') closeChat();
     });
 
-    // Update chat config when track changes
-    document.querySelectorAll('.track-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        updateChatConfig(tab.dataset.track);
+    // ========== CHAT EVENT LISTENERS ==========
+    document.getElementById('aiBtn').addEventListener('click', openChat);
+    document.getElementById('chatClose').addEventListener('click', closeChat);
+    document.getElementById('chatOverlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeChat();
+    });
+    document.getElementById('chatPanel').addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Chat hints event delegation
+    document.getElementById('chatHints').addEventListener('click', (e) => {
+      const hint = e.target.closest('.chat-hint');
+      if (hint && hint.dataset.hint) {
+        askHint(hint.dataset.hint);
+      }
+    });
+
+    // ========== FAB EVENT LISTENER ==========
+    document.getElementById('fab').addEventListener('click', logCall);
+
+    // ========== WELCOME SCREEN ==========
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const welcomeStart = document.getElementById('welcomeStart');
+    let selectedWelcomeTrack = 'amy';
+
+    // Check if first visit
+    if (localStorage.getItem('hasVisited')) {
+      // Not first visit - hide welcome screen immediately
+      welcomeOverlay.classList.add('hidden');
+    } else {
+      // First visit - show welcome screen
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Track selection in welcome screen
+    document.querySelectorAll('.welcome-track').forEach(track => {
+      track.addEventListener('click', () => {
+        document.querySelectorAll('.welcome-track').forEach(t => t.classList.remove('selected'));
+        track.classList.add('selected');
+        selectedWelcomeTrack = track.dataset.track;
       });
     });
 
-    // Initialize chat config
-    updateChatConfig('amy');
+    // Start button
+    welcomeStart.addEventListener('click', () => {
+      // Save first visit
+      localStorage.setItem('hasVisited', 'true');
+      
+      // Set selected track
+      switchGlobalTrack(selectedWelcomeTrack);
+      
+      // Hide welcome screen with animation
+      welcomeOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+      
+      // Show welcome toast
+      setTimeout(() => {
+        const trackName = selectedWelcomeTrack === 'amy' ? '🏨 Amy · Hotels' : '🎓 Leti · Unis';
+        showToast('Willkommen! Track: ' + trackName);
+      }, 600);
+    });
+
+    // Initialize (chat config is set by switchGlobalTrack if saved, otherwise defaults to amy)
+    if (!localStorage.getItem('selectedTrack')) {
+      updateChatConfig('amy');
+    }
 
     init();
   </script>
