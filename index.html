@@ -57,8 +57,8 @@
       --titanium: #6B6B70;
       --titanium-light: #9A9AA0;
       
-      /* SUCCESS */
-      --success: #2DD4A7;
+      /* SUCCESS - Harmonisch mit Gold */
+      --success: #C9A962;
       
       /* GEOMETRY */
       --radius: 12px;
@@ -434,6 +434,38 @@
       font-weight: 500;
       letter-spacing: 0.06em;
       text-transform: uppercase;
+    }
+
+    /* Desktop Navigation - Hidden by default on mobile */
+    .desktop-nav {
+      display: none;
+      width: 100%;
+      justify-content: center;
+      padding: 8px 16px 12px;
+      background: linear-gradient(180deg, rgba(18,18,20,0.95) 0%, rgba(18,18,20,0.8) 100%);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .desktop-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.25s var(--ease-luxury);
+    }
+    
+    .desktop-nav-item svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.6;
+      stroke: currentColor;
     }
 
     /* Main Content */
@@ -2041,10 +2073,10 @@
       z-index: 99;
     }
     .ai-btn:hover {
-      border-color: var(--purple);
-      color: var(--purple);
+      border-color: var(--champagne);
+      color: var(--champagne-light);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(157, 122, 255, 0.15);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.1);
     }
     .ai-btn svg {
       width: 18px;
@@ -2053,13 +2085,13 @@
     .ai-btn-dot {
       width: 6px;
       height: 6px;
-      background: var(--success);
+      background: var(--champagne);
       border-radius: 50%;
-      animation: dotPulse 2s ease-in-out infinite;
+      animation: dotPulse 3s ease-in-out infinite;
     }
     @keyframes dotPulse {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      50% { opacity: 0.5; }
     }
 
     /* Chat Panel */
@@ -2571,6 +2603,16 @@
 
     /* ========== DESKTOP PERFEKTIONIERUNG ========== */
     @media (min-width: 1024px) {
+      /* WICHTIG: Bottom-Nav auf Desktop verstecken */
+      .bottom-nav {
+        display: none !important;
+      }
+      
+      /* Main braucht kein bottom-padding auf Desktop */
+      .main {
+        padding-bottom: 24px;
+      }
+      
       /* Zentrierte App mit elegantem Rahmen */
       .app {
         max-width: 560px;
@@ -2717,22 +2759,21 @@
       100% { background-position: 200% 0; }
     }
     
-    /* Shimmer-Effekt für Gold-Elemente */
-    .welcome-title,
+    /* Shimmer-Effekt für Gold-Elemente - DEZENT */
+    .welcome-title {
+      color: var(--champagne);
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: var(--champagne);
+      background: none;
+      animation: none;
+    }
+    
     .power-phrase-text {
-      background: linear-gradient(
-        90deg,
-        var(--champagne) 0%,
-        #f5e6b8 25%,
-        var(--champagne) 50%,
-        #f5e6b8 75%,
-        var(--champagne) 100%
-      );
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shimmer 4s linear infinite;
+      color: var(--champagne-light);
+      background: none;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: var(--champagne-light);
+      animation: none;
     }
     
     /* Subtile Hover-Glow */
@@ -3127,10 +3168,9 @@
       align-items: center;
       justify-content: center;
       box-shadow: 
-        0 4px 12px rgba(212, 175, 55, 0.25),
-        0 12px 40px rgba(212, 175, 55, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 8px 24px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
       transition: all var(--duration-normal) var(--ease-luxury);
       z-index: 99;
     }
@@ -3139,16 +3179,15 @@
       position: absolute;
       inset: 2px;
       border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
       pointer-events: none;
     }
     .fab:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: 
-        0 6px 16px rgba(212, 175, 55, 0.3),
-        0 16px 48px rgba(212, 175, 55, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        0 6px 16px rgba(0, 0, 0, 0.35),
+        0 12px 32px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     .fab:active {
       transform: scale(0.96);
@@ -3169,7 +3208,7 @@
     }
     @keyframes fabPulse {
       0%, 100% { transform: scale(1); opacity: 0; }
-      50% { transform: scale(1.15); opacity: 0.2; }
+      50% { transform: scale(1.08); opacity: 0.1; }
     }
   </style>
 </head>
@@ -3180,7 +3219,7 @@
     <div class="welcome-content">
       <div class="welcome-glow"></div>
       
-      <div class="welcome-badge">LEVERAGE × COLLEGE FASHION</div>
+      <div class="welcome-badge">Premium Sales Training</div>
       
       <h1 class="welcome-title">Sales Academy</h1>
       
@@ -3259,6 +3298,26 @@
           <span><span id="streak-count">0</span></span>
         </div>
       </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav" id="desktopNav">
+        <button class="desktop-nav-item active" data-view="home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          Home
+        </button>
+        <button class="desktop-nav-item" data-view="learn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h5"/></svg>
+          Einwände
+        </button>
+        <button class="desktop-nav-item" data-view="script">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          Skripte
+        </button>
+        <button class="desktop-nav-item" data-view="tools">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          Preis & ROI
+        </button>
+      </nav>
     </header>
 
     <main class="main">
@@ -4813,12 +4872,7 @@ Bis dann!
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', () => {
         const viewId = item.dataset.view;
-        
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById('view-' + viewId).classList.add('active');
+        switchToView(viewId);
       });
     });
 
@@ -4955,15 +5009,31 @@ Bis dann!
     }
 
     function switchToView(viewId) {
+      // Update Mobile Nav
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      document.querySelector(`.nav-item[data-view="${viewId}"]`).classList.add('active');
+      const mobileNav = document.querySelector(`.nav-item[data-view="${viewId}"]`);
+      if (mobileNav) mobileNav.classList.add('active');
       
+      // Update Desktop Nav
+      document.querySelectorAll('.desktop-nav-item').forEach(i => i.classList.remove('active'));
+      const desktopNav = document.querySelector(`.desktop-nav-item[data-view="${viewId}"]`);
+      if (desktopNav) desktopNav.classList.add('active');
+      
+      // Switch View
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById('view-' + viewId).classList.add('active');
       
       // Scroll to top smoothly
       document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
     }
+    
+    // ========== DESKTOP NAVIGATION ==========
+    document.querySelectorAll('.desktop-nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const viewId = item.dataset.view;
+        switchToView(viewId);
+      });
+    });
 
     function saveStats() {
       localStorage.setItem('todayStats', JSON.stringify(stats));
@@ -5006,20 +5076,22 @@ Bis dann!
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    // ========== CONFETTI ==========
+    // ========== CELEBRATION SPARKLE ==========
     function triggerConfetti() {
       const container = document.getElementById('confetti');
-      const colors = ['#C9A962', '#00A67E', '#9D7AFF', '#E8D5A3', '#34D399'];
+      // Elegante Gold-Töne nur
+      const colors = ['#D4AF37', '#E8D5A3', '#C9A962', '#F4ECD8'];
       
-      for (let i = 0; i < 35; i++) {
+      // Weniger Partikel = eleganter
+      for (let i = 0; i < 15; i++) {
         const piece = document.createElement('div');
         piece.className = 'confetti';
         piece.style.left = Math.random() * 100 + '%';
         piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDelay = Math.random() * 0.4 + 's';
-        piece.style.animationDuration = (2.5 + Math.random()) + 's';
+        piece.style.animationDelay = Math.random() * 0.3 + 's';
+        piece.style.animationDuration = (2 + Math.random()) + 's';
         container.appendChild(piece);
-        setTimeout(() => piece.remove(), 3500);
+        setTimeout(() => piece.remove(), 2500);
       }
     }
 
@@ -5028,8 +5100,8 @@ Bis dann!
       amy: {
         url: 'https://leverage-strategies.com/',
         icon: '🏨',
-        title: 'LEVERAGE Assistent',
-        btnText: 'Frag LS',
+        title: 'LEVERAGE Concierge',
+        btnText: 'Assistent',
         hints: [
           { emoji: '📈', text: 'Direktbuchungen' },
           { emoji: '🤖', text: 'AI Concierge' },
@@ -5038,10 +5110,10 @@ Bis dann!
         ]
       },
       leti: {
-        url: 'https://1fejsj-td.myshopify.com',
+        url: 'https://collegefashion.de',
         icon: '🎓',
-        title: 'College Fashion Berater',
-        btnText: 'Frag CF',
+        title: 'College Fashion',
+        btnText: 'Berater',
         hints: [
           { emoji: '💰', text: 'Schärpen Preise' },
           { emoji: '📦', text: 'Lieferzeit' },
