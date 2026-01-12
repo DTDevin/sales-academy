@@ -504,8 +504,10 @@
 
     /* Hero Section - Premium */
     .hero {
+      position: relative;
       text-align: center;
       padding: 36px 0 44px;
+      overflow: hidden;
     }
     .hero-eyebrow {
       font-size: 9px;
@@ -1753,6 +1755,8 @@
       color: var(--text-muted);
     }
     .welcome-start {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -2102,6 +2106,67 @@
     @keyframes dotPulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
+    }
+
+    /* Call FAB - Floating Action Button für Anrufe */
+    .call-fab {
+      position: fixed;
+      bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      border-radius: 16px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s var(--ease-out);
+      z-index: 102;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      box-shadow: 0 4px 20px rgba(76, 175, 80, 0.2);
+    }
+    .call-fab:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 32px rgba(76, 175, 80, 0.35);
+      border-color: rgba(76, 175, 80, 0.5);
+    }
+    .call-fab:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+    .call-fab svg {
+      width: 24px;
+      height: 24px;
+      stroke: #fff;
+    }
+    .call-fab::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 50% 50%, rgba(76, 175, 80, 0.15), transparent 70%);
+      z-index: -1;
+      animation: callFabGlow 3s ease-in-out infinite;
+    }
+    @keyframes callFabGlow {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+    .call-fab-label {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      opacity: 0.8;
     }
 
     /* Chat Panel */
@@ -2771,6 +2836,18 @@
         top: -2px;
         right: -2px;
       }
+      .call-fab {
+        width: 48px;
+        height: 48px;
+        right: 12px;
+      }
+      .call-fab svg {
+        width: 20px;
+        height: 20px;
+      }
+      .call-fab-label {
+        display: none;
+      }
     }
 
     /* Bottom Navigation Mobile Refinements */
@@ -2940,6 +3017,11 @@
         left: 32px;
       }
       
+      .call-fab {
+        bottom: 32px;
+        right: 32px;
+      }
+      
       /* Cursor Pointer für alle interaktiven Elemente */
       .card, .response-card, .quick-action, .track-toggle, .persona-card {
         cursor: pointer;
@@ -2961,6 +3043,9 @@
       .ai-btn {
       z-index: 101;
         left: 32px;
+      }
+      .call-fab {
+        right: 32px;
       }
     }
 
@@ -3908,20 +3993,273 @@
 
     /* Scrollbar Premium */
     ::-webkit-scrollbar {
-      width: 6px;
+      width: 4px;
     }
 
     ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.2);
+      background: transparent;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--champagne), #B8973A);
-      border-radius: 3px;
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.4), rgba(184, 151, 58, 0.2));
+      border-radius: 2px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, #E5C048, var(--champagne));
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.6), rgba(184, 151, 58, 0.4));
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PREMIUM DESIGN SYSTEM - Subtle Luxury
+       ═══════════════════════════════════════════════════════════════ */
+
+    /* Glasmorphism Header Enhancement */
+    .header {
+      background: linear-gradient(
+        180deg,
+        rgba(8, 9, 12, 0.92) 0%,
+        rgba(8, 9, 12, 0.85) 100%
+      );
+      backdrop-filter: blur(32px) saturate(180%);
+      -webkit-backdrop-filter: blur(32px) saturate(180%);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+      box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.03) inset,
+        0 4px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Ambient Light - Subtle glow behind key elements */
+    .ambient-glow {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(40px);
+      z-index: -1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(60px);
+      z-index: 0;
+    }
+
+    .call-fab::after {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(76, 175, 80, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(20px);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-luxury);
+    }
+
+    .call-fab:hover::after {
+      opacity: 1;
+    }
+
+    /* Micro-Animations - Subtle hover states */
+    .card {
+      transition: 
+        transform 0.4s var(--ease-luxury),
+        box-shadow 0.4s var(--ease-luxury),
+        border-color 0.4s var(--ease-luxury);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-item {
+      transition: 
+        transform 0.3s var(--ease-luxury),
+        background 0.3s var(--ease-luxury);
+    }
+
+    .product-item:hover {
+      transform: translateY(-3px) scale(1.02);
+      background: rgba(212, 175, 55, 0.06);
+    }
+
+    .persona-card {
+      transition: 
+        transform 0.3s var(--ease-luxury),
+        border-color 0.3s var(--ease-luxury);
+    }
+
+    .persona-card:hover {
+      transform: translateX(4px);
+      border-color: rgba(212, 175, 55, 0.2);
+    }
+
+    .quick-action {
+      transition: 
+        transform 0.3s var(--ease-luxury),
+        background 0.3s var(--ease-luxury),
+        border-color 0.3s var(--ease-luxury);
+    }
+
+    .quick-action:hover {
+      transform: translateY(-2px);
+      background: rgba(212, 175, 55, 0.08);
+      border-color: rgba(212, 175, 55, 0.2);
+    }
+
+    .response-card {
+      transition: 
+        transform 0.25s var(--ease-luxury),
+        background 0.25s var(--ease-luxury);
+    }
+
+    .response-card:hover {
+      transform: scale(1.01);
+    }
+
+    .nav-item, .desktop-nav-item {
+      transition: 
+        color 0.3s var(--ease-luxury),
+        transform 0.3s var(--ease-luxury);
+    }
+
+    .nav-item:active, .desktop-nav-item:active {
+      transform: scale(0.95);
+    }
+
+    /* Pull to Refresh Indicator */
+    .pull-indicator {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      pointer-events: none;
+      transition: transform 0.3s var(--ease-luxury);
+    }
+
+    .pull-indicator.visible {
+      transform: translateX(-50%) translateY(80px);
+    }
+
+    .pull-spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(212, 175, 55, 0.2);
+      border-top-color: var(--champagne);
+      border-radius: 50%;
+      animation: pullSpin 0.8s linear infinite;
+    }
+
+    @keyframes pullSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Refined text selection */
+    ::selection {
+      background: rgba(212, 175, 55, 0.25);
+      color: var(--champagne-light);
+    }
+
+    /* Focus states - accessible but elegant */
+    :focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4);
+    }
+
+    /* Button press states */
+    .welcome-start:active,
+    .ai-btn:active,
+    .call-fab:active {
+      transform: scale(0.97);
+    }
+
+    /* Toast enhancement */
+    .toast {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* Chat panel glassmorphism */
+    .chat-panel {
+      background: linear-gradient(
+        180deg,
+        rgba(18, 18, 22, 0.98) 0%,
+        rgba(12, 12, 15, 0.98) 100%
+      );
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    /* Subtle shine effect on premium elements */
+    .welcome-start::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+      );
+      transition: left 0.6s var(--ease-luxury);
+    }
+
+    .welcome-start:hover::before {
+      left: 100%;
+    }
+
+    /* Stat items subtle interaction */
+    .stat-item {
+      transition: transform 0.3s var(--ease-luxury);
+      cursor: pointer;
+    }
+
+    .stat-item:hover {
+      transform: scale(1.05);
+    }
+
+    .stat-item:active {
+      transform: scale(0.98);
+    }
+
+    /* Loading skeleton shimmer */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .skeleton {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.03) 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius);
     }
 
   </style>
@@ -3987,6 +4325,11 @@
   <div class="ambient"></div>
   <div class="grain"></div>
 
+  <!-- Pull-to-Refresh Indicator -->
+  <div class="pull-indicator" id="pullIndicator">
+    <div class="pull-spinner"></div>
+  </div>
+
   <div class="app">
     
     <header class="header">
@@ -4017,19 +4360,19 @@
       <nav class="desktop-nav" id="desktopNav">
         <button class="desktop-nav-item active" data-view="home">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
-          Home
+          Dashboard
         </button>
         <button class="desktop-nav-item" data-view="learn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h5"/></svg>
-          Einwände
+          Expertise
         </button>
         <button class="desktop-nav-item" data-view="script">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-          Skripte
+          Leitfäden
         </button>
         <button class="desktop-nav-item" data-view="tools">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-          Preis & ROI
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+          Templates
         </button>
       </nav>
     </header>
@@ -4297,23 +4640,23 @@
         <div class="learn-track active" id="learn-amy">
           <div class="section">
             <div class="section-header">
-              <div class="section-title">Unsere Branchen</div>
+              <div class="section-title">Unsere Expertise</div>
             </div>
             <div class="product-grid">
               <div class="product-item">
                 <div class="product-icon">🏨</div>
                 <div class="product-name">Luxury Hospitality</div>
-                <div class="product-price">+47% Direktbuchungen</div>
+                <div class="product-price">Referenz: Bayerischer Hof</div>
               </div>
               <div class="product-item">
                 <div class="product-icon">⚕️</div>
                 <div class="product-name">Premium Medical</div>
-                <div class="product-price">+180% Anfragen</div>
+                <div class="product-price">Kliniken & Praxen</div>
               </div>
               <div class="product-item">
                 <div class="product-icon">🛍️</div>
                 <div class="product-name">Creator Commerce</div>
-                <div class="product-price">2.4× Warenkorbwert</div>
+                <div class="product-price">Drops & E-Commerce</div>
               </div>
               <div class="product-item">
                 <div class="product-icon">🤖</div>
@@ -4412,34 +4755,31 @@
             
             <div class="card" style="margin-top: 12px;">
               <div class="card-header">
-                <div class="card-title">ROI nach Branche</div>
+                <div class="card-title">ROI-Beispiel: Luxury Hotel</div>
               </div>
               <div class="card-body">
                 <div class="roi-example">
-                  <div class="roi-line"><b>🏨 Luxury Hotel</b></div>
-                  <div class="roi-line">„+47% Direktbuchungen = <span class="roi-highlight">+€1.2M Revenue/Jahr</span>"</div>
+                  <div class="roi-line">„<b>100 Zimmer</b>, 70% Auslastung = 25.000 Nächte/Jahr"</div>
+                  <div class="roi-line">„Bei <b>120€/Nacht</b> = 3 Mio € Umsatz"</div>
+                  <div class="roi-line">„<b>40% über Booking</b> × 15% = <span class="roi-highlight">180.000€/Jahr Kommission</span>"</div>
                   <div class="roi-divider"></div>
-                  <div class="roi-line"><b>⚕️ Privatklinik</b></div>
-                  <div class="roi-line">„+180% Anfragen · <span class="roi-highlight">€28k Ø Behandlungswert</span>"</div>
-                  <div class="roi-divider"></div>
-                  <div class="roi-line"><b>🛍️ Creator Drop</b></div>
-                  <div class="roi-line">„2.4× Warenkorbwert · <span class="roi-highlight">8 Min ausverkauft</span>"</div>
+                  <div class="roi-line">„<b>+10% Direktbuchungen</b> = 18.000€ gespart"</div>
+                  <div class="roi-line">„Unsere Fee: <b>ab 490€/Monat</b> → ROI: <b>3:1</b>"</div>
                 </div>
               </div>
             </div>
             
             <div class="card" style="margin-top: 12px;">
               <div class="card-header">
-                <div class="card-title">Ergebnisse nach Branche</div>
+                <div class="card-title">Unsere Ergebnisse</div>
               </div>
               <div class="card-body">
                 <div class="facts-list">
-                  <div class="fact-item"><span class="fact-num">🏨</span> +47% Direktbuchungen · +€1.2M Revenue/Jahr</div>
-                  <div class="fact-item"><span class="fact-num">⚕️</span> +180% Anfragen · -72% No-Show Rate</div>
-                  <div class="fact-item"><span class="fact-num">🛍️</span> 2.4× Warenkorbwert · 8 Min ausverkauft</div>
+                  <div class="fact-item"><span class="fact-num">📈</span> +47% Direktbuchungen (Bayerischer Hof)</div>
+                  <div class="fact-item"><span class="fact-num">💰</span> +€1.2M Revenue/Jahr möglich</div>
                   <div class="fact-item"><span class="fact-num">⏱️</span> 48h Konzept · 14 Tage bis MVP</div>
                   <div class="fact-item"><span class="fact-num">👥</span> 100% Senior-Level Team</div>
-                  <div class="fact-item"><span class="fact-num">🌍</span> 500+ Creator Reichweite (Mio)</div>
+                  <div class="fact-item"><span class="fact-num">🏆</span> 30 Jahre EXTRA Group Erfahrung</div>
                 </div>
               </div>
             </div>
@@ -4474,33 +4814,13 @@
 
           <div class="section">
             <div class="section-header">
-              <div class="section-title">Referenzen</div>
+              <div class="section-title">Referenz</div>
             </div>
             <div class="card" style="border-color: var(--accent); background: var(--accent-glow);">
-              <div class="card-body">
-                <div class="funding-options">
-                  <div class="funding-item">
-                    <div class="funding-icon">🏨</div>
-                    <div class="funding-content">
-                      <div class="funding-title">Bayerischer Hof</div>
-                      <div class="funding-desc">+23% Direktbuchungen</div>
-                    </div>
-                  </div>
-                  <div class="funding-item">
-                    <div class="funding-icon">⚕️</div>
-                    <div class="funding-content">
-                      <div class="funding-title">Klinik Bellevue</div>
-                      <div class="funding-desc">+180% qualifizierte Anfragen</div>
-                    </div>
-                  </div>
-                  <div class="funding-item">
-                    <div class="funding-icon">🎬</div>
-                    <div class="funding-content">
-                      <div class="funding-title">500+ Mio Creator Reach</div>
-                      <div class="funding-desc">@maxmustermann, @fashionista...</div>
-                    </div>
-                  </div>
-                </div>
+              <div class="card-body" style="text-align: center;">
+                <div style="font-size: 32px; margin-bottom: 12px;">🏨</div>
+                <div style="font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 4px;">Bayerischer Hof</div>
+                <div style="font-size: 12px; color: var(--text-muted);">+23% Direktbuchungen durch unsere Strategie</div>
               </div>
             </div>
           </div>
@@ -5643,6 +5963,14 @@ Bis dann!
       <div class="ai-btn-dot"></div>
     </button>
 
+    <!-- Call FAB - Anruf starten -->
+    <button class="call-fab" id="callFab" title="Anruf starten">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+      <span class="call-fab-label">Anruf</span>
+    </button>
+
     <!-- Chat Panel Overlay -->
     <div class="chat-overlay" id="chatOverlay">
       <div class="chat-panel" id="chatPanel">
@@ -5752,6 +6080,69 @@ Bis dann!
         } catch (e) {
           return false;
         }
+      }
+      
+      // ═══════════════════════════════════════════════════════════
+      // HAPTIC FEEDBACK SYSTEM - Premium Touch Experience
+      // ═══════════════════════════════════════════════════════════
+      
+      const hapticPatterns = {
+        light: 10,           // Subtle tap - navigation, small buttons
+        medium: 25,          // Standard tap - main actions
+        heavy: 40,           // Strong tap - important actions
+        success: [10, 50, 10], // Double pulse - confirmations
+        error: [50, 30, 50, 30, 50], // Triple pulse - errors
+        notification: [10, 30, 10, 30, 20], // Attention pattern
+        selection: [5, 15, 5] // Quick selection feedback
+      };
+      
+      function haptic(type = 'light') {
+        // Check if Vibration API is supported
+        if (!('vibrate' in navigator)) return;
+        
+        // Check if user prefers reduced motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        
+        const pattern = hapticPatterns[type] || hapticPatterns.light;
+        
+        try {
+          navigator.vibrate(pattern);
+        } catch (e) {
+          // Silently fail - not all devices support vibration
+        }
+      }
+      
+      // Auto-attach haptic feedback to interactive elements
+      function initHaptics() {
+        // Navigation items
+        document.querySelectorAll('.nav-item, .desktop-nav-item').forEach(el => {
+          el.addEventListener('touchstart', () => haptic('light'), { passive: true });
+        });
+        
+        // Track toggles
+        document.querySelectorAll('.track-toggle, .track-tab, .welcome-track').forEach(el => {
+          el.addEventListener('touchstart', () => haptic('medium'), { passive: true });
+        });
+        
+        // Primary buttons
+        document.querySelectorAll('.welcome-start, .call-fab, .ai-btn').forEach(el => {
+          el.addEventListener('touchstart', () => haptic('heavy'), { passive: true });
+        });
+        
+        // Cards and interactive elements
+        document.querySelectorAll('.quick-action, .product-item, .persona-card, .response-card').forEach(el => {
+          el.addEventListener('touchstart', () => haptic('selection'), { passive: true });
+        });
+        
+        // Copy buttons
+        document.querySelectorAll('.copy-btn').forEach(el => {
+          el.addEventListener('touchstart', () => haptic('medium'), { passive: true });
+        });
+        
+        // Chat pills
+        document.querySelectorAll('.chat-cat-pill').forEach(el => {
+          el.addEventListener('touchstart', () => haptic('light'), { passive: true });
+        });
       }
       
       // Initialisierung
@@ -5887,6 +6278,57 @@ Bis dann!
       const quote = quotes[Math.floor(Math.random() * quotes.length)];
       var quoteEl = document.getElementById('quote-text');
       if (quoteEl) quoteEl.textContent = `"${quote}"`;
+      
+      // Initialize Haptic Feedback System
+      initHaptics();
+      
+      // Initialize Pull-to-Refresh
+      initPullToRefresh();
+    }
+    
+    // ═══════════════════════════════════════════════════════════
+    // PULL-TO-REFRESH - iOS Style
+    // ═══════════════════════════════════════════════════════════
+    
+    function initPullToRefresh() {
+      const mainEl = document.querySelector('.main');
+      const indicator = document.getElementById('pullIndicator');
+      if (!mainEl || !indicator) return;
+      
+      let startY = 0;
+      let isPulling = false;
+      const threshold = 80;
+      
+      mainEl.addEventListener('touchstart', (e) => {
+        if (mainEl.scrollTop === 0) {
+          startY = e.touches[0].clientY;
+          isPulling = true;
+        }
+      }, { passive: true });
+      
+      mainEl.addEventListener('touchmove', (e) => {
+        if (!isPulling) return;
+        
+        const currentY = e.touches[0].clientY;
+        const diff = currentY - startY;
+        
+        if (diff > 20 && mainEl.scrollTop === 0) {
+          indicator.classList.add('visible');
+        }
+      }, { passive: true });
+      
+      mainEl.addEventListener('touchend', () => {
+        if (indicator.classList.contains('visible')) {
+          haptic('medium');
+          
+          // Simulate refresh
+          setTimeout(() => {
+            indicator.classList.remove('visible');
+            showToast('Aktualisiert ✓');
+          }, 800);
+        }
+        isPulling = false;
+      }, { passive: true });
     }
 
     function updateGreeting() {
@@ -5993,6 +6435,7 @@ Bis dann!
     }
 
     function switchGlobalTrack(trackId) {
+      haptic('success');
       currentTrack = trackId;
       
       // Update global switcher in header
@@ -6077,6 +6520,7 @@ Bis dann!
 
     // ========== CALLS ==========
     function logCall() {
+      haptic('medium');
       stats.calls = (stats.calls || 0) + 1;
       updateStats();
       saveStats();
@@ -6101,6 +6545,7 @@ Bis dann!
         const now = Date.now();
         if (now - lastTap < 300) {
           e.preventDefault();
+          haptic('heavy');
           stats.termine = (stats.termine || 0) + 1;
           stats.connects = (stats.connects || 0) + 1;
           updateStats();
@@ -6135,6 +6580,7 @@ Bis dann!
     }
 
     function switchToView(viewId) {
+      haptic('light');
       // Update Mobile Nav
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       const mobileNav = document.querySelector(`.nav-item[data-view="${viewId}"]`);
@@ -6191,6 +6637,7 @@ Bis dann!
 
         const orig = btn.innerHTML;
         btn.innerHTML = '✓';
+        haptic('success');
         setTimeout(() => btn.innerHTML = orig, 1500);
         showToast('Kopiert!');
       });
@@ -6198,6 +6645,7 @@ Bis dann!
 
     // ========== TOAST ==========
     function showToast(text) {
+      haptic('notification');
       const toast = document.getElementById('toast');
       toast.textContent = text;
       toast.classList.add('show');
@@ -6206,6 +6654,7 @@ Bis dann!
 
     // ========== CELEBRATION SPARKLE ==========
     function triggerConfetti() {
+      haptic('success');
       const container = document.getElementById('confetti');
       // Elegante Gold-Töne nur
       const colors = ['#D4AF37', '#E8D5A3', '#C9A962', '#F4ECD8'];
@@ -6234,6 +6683,7 @@ Bis dann!
     }
 
     function openChat() {
+      haptic('medium');
       var overlay = document.getElementById('chatOverlay');
       if (!overlay) return;
       overlay.classList.add('open');
@@ -6246,6 +6696,7 @@ Bis dann!
     }
 
     function closeChat() {
+      haptic('light');
       var overlay = document.getElementById('chatOverlay');
       if (overlay) overlay.classList.remove('open');
       document.body.style.overflow = '';
@@ -6378,6 +6829,16 @@ Bis dann!
     
     if (aiBtnEl) aiBtnEl.addEventListener('click', openChat);
     if (chatCloseEl) chatCloseEl.addEventListener('click', closeChat);
+    
+    // Call FAB - navigiert zur Leitfäden-View
+    var callFabEl = document.getElementById('callFab');
+    if (callFabEl) {
+      callFabEl.addEventListener('click', function() {
+        switchToView('script');
+        showToast('📞 Leitfaden bereit – viel Erfolg!');
+      });
+    }
+    
     if (chatOverlayEl) chatOverlayEl.addEventListener('click', (e) => {
       if (e.target === e.currentTarget) closeChat();
     });
