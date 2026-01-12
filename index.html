@@ -1588,8 +1588,12 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
+      padding-top: max(24px, env(safe-area-inset-top));
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
       opacity: 1;
       transition: opacity 0.6s var(--ease-luxury), visibility 0.6s;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .welcome-overlay.hidden {
       opacity: 0;
@@ -1619,13 +1623,13 @@
       transform: translateX(-50%);
       width: 300px;
       height: 300px;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
       pointer-events: none;
       animation: welcomeGlow 4s ease-in-out infinite;
     }
     @keyframes welcomeGlow {
-      0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+      0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.5; transform: translateX(-50%) scale(1.05); }
     }
     .welcome-badge {
       display: inline-block;
@@ -2848,6 +2852,35 @@
       .call-fab-label {
         display: none;
       }
+      
+      /* Welcome Screen - Small screens */
+      .welcome-content {
+        max-width: 100%;
+        padding: 0 8px;
+      }
+      .welcome-title {
+        font-size: 28px;
+      }
+      .welcome-subtitle {
+        font-size: 13px;
+      }
+      .welcome-features {
+        gap: 16px;
+      }
+      .welcome-feature {
+        font-size: 10px;
+      }
+      .welcome-tracks {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .welcome-track {
+        padding: 14px;
+      }
+      .welcome-start {
+        padding: 14px 28px;
+        font-size: 14px;
+      }
     }
 
     /* Bottom Navigation Mobile Refinements */
@@ -4049,10 +4082,10 @@
       width: 300px;
       height: 300px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
       pointer-events: none;
       filter: blur(60px);
-      z-index: 0;
+      z-index: -1;
     }
 
     .call-fab::after {
@@ -4224,6 +4257,7 @@
         transparent 100%
       );
       transition: left 0.6s var(--ease-luxury);
+      pointer-events: none;
     }
 
     .welcome-start:hover::before {
