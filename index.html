@@ -385,6 +385,7 @@
       align-items: center;
       gap: 5px;
       padding: 10px 4px;
+      min-height: 44px;
       background: none;
       border: none;
       border-radius: var(--radius);
@@ -392,6 +393,7 @@
       transition: all var(--duration-normal) var(--ease-luxury);
       color: var(--text-muted);
       position: relative;
+      -webkit-tap-highlight-color: transparent;
     }
     .nav-item::after {
       content: '';
@@ -2061,7 +2063,7 @@
     /* AI Assistant Button */
     .ai-btn {
       position: fixed;
-      bottom: 90px;
+      bottom: calc(90px + env(safe-area-inset-bottom, 0px));
       left: 20px;
       height: 48px;
       padding: 0 18px;
@@ -2077,6 +2079,8 @@
       font-weight: 600;
       transition: all 0.3s var(--ease-out);
       z-index: 101;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .ai-btn:hover {
       border-color: var(--champagne);
@@ -2374,6 +2378,7 @@
       align-items: flex-end;
       gap: 10px;
       padding: 16px 20px;
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
       border-top: 1px solid var(--border);
       background: var(--bg-secondary);
     }
@@ -2461,11 +2466,14 @@
         padding-bottom: 40px;
       }
       .fab {
-        bottom: 24px;
+        bottom: 32px;
+        right: 32px;
+        animation: fabFloat 4s ease-in-out infinite;
       }
       .ai-btn {
-      z-index: 101;
-        bottom: 24px;
+        z-index: 101;
+        bottom: 32px;
+        left: 32px;
       }
       
       /* Desktop Navigation in Header */
@@ -2924,12 +2932,12 @@
       /* FAB & AI Button Desktop Position */
       .fab {
         bottom: 32px;
-        right: calc(50% - 280px + 24px);
+        right: 32px;
       }
       .ai-btn {
       z-index: 101;
         bottom: 32px;
-        left: calc(50% - 280px + 24px);
+        left: 32px;
       }
       
       /* Cursor Pointer für alle interaktiven Elemente */
@@ -2948,11 +2956,35 @@
       }
       
       .fab {
-        right: calc(50% - 300px + 32px);
+        right: 32px;
       }
       .ai-btn {
       z-index: 101;
-        left: calc(50% - 300px + 32px);
+        left: 32px;
+      }
+    }
+
+    /* ========== ULTRA WIDE SCREENS (1920px+) ========== */
+    @media (min-width: 1920px) {
+      .app {
+        max-width: 640px;
+        margin: 32px auto;
+        min-height: calc(100vh - 64px);
+        box-shadow: 
+          0 0 0 1px rgba(212, 175, 55, 0.1),
+          0 40px 80px -20px rgba(0, 0, 0, 0.5);
+      }
+      .fab {
+        right: 48px;
+        bottom: 48px;
+        width: 64px;
+        height: 64px;
+      }
+      .ai-btn {
+        left: 48px;
+        bottom: 48px;
+        height: 52px;
+        font-size: 14px;
       }
     }
 
@@ -3360,10 +3392,69 @@
       }
     }
 
+    /* ========== ULTRA SMALL DEVICES (iPhone SE, Galaxy S5) ========== */
+    @media (max-width: 320px) {
+      .header {
+        padding: 10px 12px;
+      }
+      .logo-text {
+        font-size: 13px;
+      }
+      .main {
+        padding: 12px;
+        padding-bottom: 100px;
+      }
+      .hero-title {
+        font-size: 22px;
+      }
+      .hero-sub {
+        font-size: 12px;
+      }
+      .stat-value {
+        font-size: 20px;
+      }
+      .stat-label {
+        font-size: 8px;
+      }
+      .section-title {
+        font-size: 8px;
+      }
+      .card-body {
+        padding: 12px;
+      }
+      .welcome-title {
+        font-size: 24px;
+      }
+      .welcome-subtitle {
+        font-size: 12px;
+      }
+      .welcome-track {
+        padding: 12px 8px;
+        gap: 10px;
+      }
+      .welcome-track-name {
+        font-size: 14px;
+      }
+      .welcome-track-desc {
+        font-size: 10px;
+      }
+      .fab {
+        width: 48px;
+        height: 48px;
+        right: 12px;
+      }
+      .ai-btn {
+        left: 12px;
+        height: 40px;
+        padding: 0 12px;
+        font-size: 11px;
+      }
+    }
+
     /* FAB - Premium Porsche/Maybach */
     .fab {
       position: fixed;
-      bottom: 94px;
+      bottom: calc(94px + env(safe-area-inset-bottom, 0px));
       right: 20px;
       width: 58px;
       height: 58px;
@@ -3381,6 +3472,13 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
       transition: all var(--duration-normal) var(--ease-luxury);
       z-index: 101;
+      animation: fabFloat 4s ease-in-out infinite;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    @keyframes fabFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
     .fab::before {
       content: '';
@@ -3391,14 +3489,16 @@
       pointer-events: none;
     }
     .fab:hover {
-      transform: translateY(-2px);
+      animation: none;
+      transform: translateY(-2px) scale(1.05);
       box-shadow: 
         0 6px 16px rgba(0, 0, 0, 0.35),
         0 12px 32px rgba(0, 0, 0, 0.25),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     .fab:active {
-      transform: scale(0.96);
+      animation: none;
+      transform: scale(0.92);
       transition-duration: 0.1s;
     }
     .fab svg {
@@ -3468,10 +3568,14 @@
       position: absolute;
       inset: -4px;
       border-radius: 20px;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+      opacity: 0.6;
+      animation: fabGlow 4s ease-in-out infinite;
       z-index: -2;
+    }
+    @keyframes fabGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.1); }
     }
 
     .fab:hover::after {
@@ -3855,7 +3959,7 @@
         <div class="welcome-tracks">
           <button class="welcome-track selected" data-track="amy">
             <span class="welcome-track-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg></span>
-            <span class="welcome-track-name">LS | Hotelmarketing</span>
+            <span class="welcome-track-name">LS | Premium Digital</span>
             <span class="welcome-track-desc">LEVERAGE Strategies</span>
           </button>
           <button class="welcome-track" data-track="leti">
@@ -4193,28 +4297,68 @@
         <div class="learn-track active" id="learn-amy">
           <div class="section">
             <div class="section-header">
-              <div class="section-title">LEVERAGE Services</div>
+              <div class="section-title">Unsere Branchen</div>
             </div>
             <div class="product-grid">
               <div class="product-item">
-                <div class="product-icon">📈</div>
-                <div class="product-name">Direktbuchungs-Optimierung</div>
-                <div class="product-price">Mehr Umsatz</div>
+                <div class="product-icon">🏨</div>
+                <div class="product-name">Luxury Hospitality</div>
+                <div class="product-price">+47% Direktbuchungen</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">⚕️</div>
+                <div class="product-name">Premium Medical</div>
+                <div class="product-price">+180% Anfragen</div>
+              </div>
+              <div class="product-item">
+                <div class="product-icon">🛍️</div>
+                <div class="product-name">Creator Commerce</div>
+                <div class="product-price">2.4× Warenkorbwert</div>
               </div>
               <div class="product-item">
                 <div class="product-icon">🤖</div>
-                <div class="product-name">AI Concierge</div>
-                <div class="product-price">24/7 Service</div>
+                <div class="product-name">AI & Automation</div>
+                <div class="product-price">HOT 🔥</div>
               </div>
-              <div class="product-item">
-                <div class="product-icon">💬</div>
-                <div class="product-name">WhatsApp Marketing</div>
-                <div class="product-price">Gäste-Kanal</div>
-              </div>
-              <div class="product-item">
-                <div class="product-icon">📊</div>
-                <div class="product-name">Revenue Analytics</div>
-                <div class="product-price">Insights</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Unsere Services</div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="funding-options">
+                  <div class="funding-item">
+                    <div class="funding-icon">🤖</div>
+                    <div class="funding-content">
+                      <div class="funding-title">AI & Automation</div>
+                      <div class="funding-desc">Chatbots · Voice AI · Workflow Automation</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">📈</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Performance Marketing</div>
+                      <div class="funding-desc">Meta Ads · Google Ads · Conversion Tracking</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🎨</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Creative Production</div>
+                      <div class="funding-desc">Video · Foto · Design · Content</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🛒</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Commerce Solutions</div>
+                      <div class="funding-desc">Websites · Shops · Booking Engines</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -4226,14 +4370,14 @@
             <div class="card">
               <div class="card-body">
                 <div class="response-card" style="margin-bottom: 0; cursor: default;">
-                  <div class="response-q" style="margin-bottom: 12px;">Mehr Direktbuchungen, weniger OTA-Kosten</div>
+                  <div class="response-q" style="margin-bottom: 12px;">Boutique Studio · Premium Focus</div>
                   <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
-                    <li>Bis zu 15-20% weniger Booking.com Kommission</li>
-                    <li>AI beantwortet Gästeanfragen in Sekunden</li>
-                    <li>WhatsApp: 98% Öffnungsrate vs. 20% E-Mail</li>
-                    <li>Komplette Datenkontrolle beim Hotel</li>
-                    <li>Keine langfristigen Verträge</li>
-                    <li>ROI bereits nach 2-3 Monaten</li>
+                    <li>Handverlesene Projekte, maximale Hingabe</li>
+                    <li>100% Senior-Level Team</li>
+                    <li>48h Strategie nach Erstgespräch</li>
+                    <li>14 Tage bis MVP</li>
+                    <li>Powered by EXTRA Group Infrastructure</li>
+                    <li>ISO 27001 Ready · GDPR Compliant</li>
                   </ul>
                 </div>
               </div>
@@ -4268,32 +4412,34 @@
             
             <div class="card" style="margin-top: 12px;">
               <div class="card-header">
-                <div class="card-title">ROI-Kalkulation</div>
+                <div class="card-title">ROI nach Branche</div>
               </div>
               <div class="card-body">
                 <div class="roi-example">
-                  <div class="roi-line">„<b>100 Zimmer</b>, 70% Auslastung = 25.000 Nächte/Jahr"</div>
-                  <div class="roi-line">„Bei <b>120€/Nacht</b> = 3 Mio € Umsatz"</div>
-                  <div class="roi-line">„<b>40% über Booking</b> × 15% = <span class="roi-highlight">180.000€/Jahr Kommission</span>"</div>
+                  <div class="roi-line"><b>🏨 Luxury Hotel</b></div>
+                  <div class="roi-line">„+47% Direktbuchungen = <span class="roi-highlight">+€1.2M Revenue/Jahr</span>"</div>
                   <div class="roi-divider"></div>
-                  <div class="roi-line">„<b>10% mehr Direkt</b> = 18.000€ gespart = <b>1.500€/Monat</b>"</div>
-                  <div class="roi-line">„Wir kosten <b>490€</b>. ROI: <b>3:1</b>"</div>
+                  <div class="roi-line"><b>⚕️ Privatklinik</b></div>
+                  <div class="roi-line">„+180% Anfragen · <span class="roi-highlight">€28k Ø Behandlungswert</span>"</div>
+                  <div class="roi-divider"></div>
+                  <div class="roi-line"><b>🛍️ Creator Drop</b></div>
+                  <div class="roi-line">„2.4× Warenkorbwert · <span class="roi-highlight">8 Min ausverkauft</span>"</div>
                 </div>
               </div>
             </div>
             
             <div class="card" style="margin-top: 12px;">
               <div class="card-header">
-                <div class="card-title">Kennzahlen</div>
+                <div class="card-title">Ergebnisse nach Branche</div>
               </div>
               <div class="card-body">
                 <div class="facts-list">
-                  <div class="fact-item"><span class="fact-num">15-18%</span> Booking.com Kommission</div>
-                  <div class="fact-item"><span class="fact-num">12-15%</span> Expedia Kommission</div>
-                  <div class="fact-item"><span class="fact-num">98%</span> WhatsApp Öffnungsrate</div>
-                  <div class="fact-item"><span class="fact-num">20%</span> E-Mail Öffnungsrate</div>
-                  <div class="fact-item"><span class="fact-num">3x</span> höhere Conversion bei Direktbuchung</div>
-                  <div class="fact-item"><span class="fact-num">+23%</span> Direktbuchungen (Bayerischer Hof)</div>
+                  <div class="fact-item"><span class="fact-num">🏨</span> +47% Direktbuchungen · +€1.2M Revenue/Jahr</div>
+                  <div class="fact-item"><span class="fact-num">⚕️</span> +180% Anfragen · -72% No-Show Rate</div>
+                  <div class="fact-item"><span class="fact-num">🛍️</span> 2.4× Warenkorbwert · 8 Min ausverkauft</div>
+                  <div class="fact-item"><span class="fact-num">⏱️</span> 48h Konzept · 14 Tage bis MVP</div>
+                  <div class="fact-item"><span class="fact-num">👥</span> 100% Senior-Level Team</div>
+                  <div class="fact-item"><span class="fact-num">🌍</span> 500+ Creator Reichweite (Mio)</div>
                 </div>
               </div>
             </div>
@@ -4304,37 +4450,57 @@
               <div class="section-title">Deine Zielgruppe</div>
             </div>
             <div class="persona-card">
-              <div class="persona-avatar">👔</div>
+              <div class="persona-avatar">🏨</div>
               <div class="persona-info">
-                <div class="persona-title">Hoteldirektor:in</div>
-                <div class="persona-desc">Entscheider, denkt in ROI, will weniger OTA-Abhängigkeit</div>
+                <div class="persona-title">Hoteldirektor:in / Revenue Manager</div>
+                <div class="persona-desc">Will OTA-Kosten senken, Direktbuchungen steigern</div>
               </div>
             </div>
             <div class="persona-card">
-              <div class="persona-avatar">📊</div>
+              <div class="persona-avatar">⚕️</div>
               <div class="persona-info">
-                <div class="persona-title">Revenue Manager</div>
-                <div class="persona-desc">Zahlenorientiert, kennt die Margen, sucht Optimierung</div>
+                <div class="persona-title">Klinikleitung / Praxismanagement</div>
+                <div class="persona-desc">Braucht qualifizierte Anfragen, weniger No-Shows</div>
               </div>
             </div>
             <div class="persona-card">
-              <div class="persona-avatar">💼</div>
+              <div class="persona-avatar">🎬</div>
               <div class="persona-info">
-                <div class="persona-title">Marketing-Leitung</div>
-                <div class="persona-desc">Will moderne Kanäle, interessiert an Guest Journey</div>
+                <div class="persona-title">Creator / Influencer / Brand</div>
+                <div class="persona-desc">Will Drops verkaufen, Community monetarisieren</div>
               </div>
             </div>
           </div>
 
           <div class="section">
             <div class="section-header">
-              <div class="section-title">Referenz</div>
+              <div class="section-title">Referenzen</div>
             </div>
             <div class="card" style="border-color: var(--accent); background: var(--accent-glow);">
-              <div class="card-body" style="text-align: center;">
-                <div style="font-size: 32px; margin-bottom: 12px;">🏨</div>
-                <div style="font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 4px;">Bayerischer Hof</div>
-                <div style="font-size: 12px; color: var(--text-muted);">Vertraut auf unsere Direktbuchungs-Strategie</div>
+              <div class="card-body">
+                <div class="funding-options">
+                  <div class="funding-item">
+                    <div class="funding-icon">🏨</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Bayerischer Hof</div>
+                      <div class="funding-desc">+23% Direktbuchungen</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">⚕️</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Klinik Bellevue</div>
+                      <div class="funding-desc">+180% qualifizierte Anfragen</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🎬</div>
+                    <div class="funding-content">
+                      <div class="funding-title">500+ Mio Creator Reach</div>
+                      <div class="funding-desc">@maxmustermann, @fashionista...</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -4350,22 +4516,22 @@
               <div class="product-item">
                 <div class="product-icon">🎀</div>
                 <div class="product-name">Premium Schärpen</div>
-                <div class="product-price">ab 29€ / Stück</div>
+                <div class="product-price">ab 29€ · 40+ Varianten</div>
               </div>
               <div class="product-item">
                 <div class="product-icon">🎓</div>
                 <div class="product-name">Doktorhüte</div>
-                <div class="product-price">ab 10,90€</div>
+                <div class="product-price">ab 10,90€ · 8 Qualitäten</div>
               </div>
               <div class="product-item">
                 <div class="product-icon">👔</div>
                 <div class="product-name">Talare</div>
-                <div class="product-price">auf Anfrage</div>
+                <div class="product-price">ab 19€ · 300+ Varianten</div>
               </div>
               <div class="product-item">
                 <div class="product-icon">✨</div>
-                <div class="product-name">Accessoires</div>
-                <div class="product-price">ab 5€</div>
+                <div class="product-name">Kombis</div>
+                <div class="product-price">ab 24€ · 250+ Sets</div>
               </div>
             </div>
           </div>
@@ -4386,6 +4552,49 @@
                     <li>Keine Größenanpassung nötig</li>
                     <li>CI-konform: Logo, Farben, Namen</li>
                   </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Schärpen-Varianten</div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="funding-options">
+                  <div class="funding-item">
+                    <div class="funding-icon">🎀</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Einfarbig, Abschluss spitz</div>
+                      <div class="funding-desc">Klassiker • Elegante Spitze unten</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🎗️</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Einfarbig, Abschluss schräg</div>
+                      <div class="funding-desc">Modern • Diagonaler Abschluss</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🌈</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Mehrfarbig, Abschluss schräg</div>
+                      <div class="funding-desc">Fakultätsfarben • Bi-/Tricolor möglich</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">✨</div>
+                    <div class="funding-content">
+                      <div class="funding-title">V-Schärpe, einfarbig</div>
+                      <div class="funding-desc">Premium • V-Form mit Spitze</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 12px; text-align: center;">
+                  40+ Varianten • Bedrucken & Besticken möglich • CI-Individualisierung
                 </div>
               </div>
             </div>
@@ -4523,6 +4732,61 @@
               </div>
             </div>
           </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">B2B-Services für Hochschulen</div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="funding-options">
+                  <div class="funding-item">
+                    <div class="funding-icon">🖥️</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Onlineplattform 24/7</div>
+                      <div class="funding-desc">CI-Anpassung • Größenbestimmung • Finanzabwicklung</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🚚</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Vor-Ort-Service</div>
+                      <div class="funding-desc">Lieferung • Ausgabe • Rücknahme am Event</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">🏷️</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Etikettier-Service</div>
+                      <div class="funding-desc">Kostenlose Namensschilder für alle Absolventen</div>
+                    </div>
+                  </div>
+                  <div class="funding-item">
+                    <div class="funding-icon">📦</div>
+                    <div class="funding-content">
+                      <div class="funding-title">Verleih / Miete</div>
+                      <div class="funding-desc">Set ELEGANT: Talar + Doktorhut + Quaste</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 12px;">
+              <div class="card-header">
+                <div class="card-title">Zusatzleistungen</div>
+              </div>
+              <div class="card-body">
+                <div class="facts-list">
+                  <div class="fact-item"><span class="fact-num purple">📜</span> Zertifikatsrollen & -mappen</div>
+                  <div class="fact-item"><span class="fact-num purple">🎨</span> Logo-Individualisierung</div>
+                  <div class="fact-item"><span class="fact-num purple">📸</span> Foto-Service (professionell)</div>
+                  <div class="fact-item"><span class="fact-num purple">🧸</span> Graduierung Teddy Bär</div>
+                  <div class="fact-item"><span class="fact-num purple">🪡</span> Stickerei ab 1 Stück</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -4536,7 +4800,7 @@
         </div>
 
         <div class="track-tabs">
-          <button class="track-tab active" data-track="amy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;margin-right:6px;vertical-align:-2px;"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg>LS · Hotelmarketing</button>
+          <button class="track-tab active" data-track="amy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;margin-right:6px;vertical-align:-2px;"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg>LS · Premium Digital</button>
           <button class="track-tab purple" data-track="leti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;margin-right:6px;vertical-align:-2px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg>CF · Graduierung</button>
         </div>
 
@@ -5402,13 +5666,13 @@ Bis dann!
         <div class="chat-messages" id="chatMessages">
           <div class="chat-welcome">
             <div class="chat-welcome-icon">🎓</div>
-            <div class="chat-welcome-title">College Fashion Berater</div>
+            <div class="chat-welcome-title">Digital Assistant</div>
             <div class="chat-welcome-sub">Seit 2007 · Weltweit im Einsatz an führenden Universitäten</div>
           </div>
           <div class="chat-message bot">
             <div class="chat-msg-avatar">CF</div>
             <div class="chat-msg-content">
-              <div class="chat-msg-bubble">Hallo! 👋 Ich bin der College Fashion Berater. Wie kann ich dir helfen? Suchst du Doktorhut, Talar, Schärpe oder etwas anderes für deine Feier?</div>
+              <div class="chat-msg-bubble">Hallo! 👋 Ich bin dein Digital Assistant. Wie kann ich dir helfen?</div>
             </div>
           </div>
         </div>
@@ -5423,10 +5687,10 @@ Bis dann!
         
         <!-- Quick Category Pills -->
         <div class="chat-categories">
+          <button class="chat-cat-pill" data-query="Was kosten eure Schärpen für Hochschulen?">🎀 Schärpen</button>
+          <button class="chat-cat-pill" data-query="Bietet ihr Verleih für Hochschulen an?">📦 Miete/Verleih</button>
           <button class="chat-cat-pill" data-query="Zeig mir eure Doktorhüte">🎓 Doktorhut</button>
-          <button class="chat-cat-pill" data-query="Was kosten eure Schärpen?">🎀 Schärpe</button>
-          <button class="chat-cat-pill" data-query="Habt ihr Talare?">👔 Talar</button>
-          <button class="chat-cat-pill" data-query="Wie sind die Lieferzeiten?">📦 Lieferzeit</button>
+          <button class="chat-cat-pill" data-query="Habt ihr Talare?">👔 Talare</button>
         </div>
         
         <!-- Chat Input -->
@@ -5646,6 +5910,87 @@ Bis dann!
     let currentTrack = 'amy';
     let currentChatTrack = 'amy';
 
+    // Chat Config - MUSS vor switchGlobalTrack definiert sein
+    const chatConfig = {
+      amy: {
+        icon: '🚀',
+        title: 'Digital Assistant',
+        btnText: 'Digital Assistant',
+        welcomeMsg: 'Hallo! 👋 Ich bin dein Digital Assistant für LEVERAGE Strategies. Wie kann ich dir helfen? Hotels, Kliniken oder Creator Commerce?',
+        categories: [
+          { emoji: '🏨', text: 'Hotels', query: 'Wie steigere ich Direktbuchungen für Hotels?' },
+          { emoji: '⚕️', text: 'Kliniken', query: 'Wie gewinne ich mehr Patienten für Privatkliniken?' },
+          { emoji: '🛍️', text: 'Creator', query: 'Wie funktioniert Creator Commerce?' },
+          { emoji: '🤖', text: 'AI & Automation', query: 'Was bietet ihr im Bereich AI & Automation?' }
+        ]
+      },
+      leti: {
+        icon: '🎓',
+        title: 'Digital Assistant',
+        btnText: 'Digital Assistant',
+        welcomeMsg: 'Hallo! 👋 Ich bin dein Digital Assistant für College Fashion. Wie kann ich dir helfen? Suchst du Doktorhut, Talar, Schärpe oder Informationen zu Miete & Verleih?',
+        categories: [
+          { emoji: '🎀', text: 'Schärpen', query: 'Was kosten eure Schärpen für Hochschulen?' },
+          { emoji: '📦', text: 'Miete/Verleih', query: 'Bietet ihr Verleih für Hochschulen an?' },
+          { emoji: '🎓', text: 'Doktorhut', query: 'Zeig mir eure Doktorhüte' },
+          { emoji: '👔', text: 'Talare', query: 'Habt ihr Talare?' }
+        ]
+      }
+    };
+
+    function updateChatConfig(track) {
+      currentChatTrack = track;
+      const config = chatConfig[track];
+      if (!config) return;
+      
+      // Update button text
+      const btnText = document.getElementById('aiBtnText');
+      if (btnText) btnText.textContent = config.btnText;
+      
+      // Update header
+      var chatIconEl = document.getElementById('chatIcon');
+      var chatTitleEl = document.getElementById('chatTitle');
+      if (chatIconEl) chatIconEl.textContent = config.icon;
+      if (chatTitleEl) chatTitleEl.textContent = config.title;
+      
+      // Update welcome
+      const welcomeTitle = document.querySelector('.chat-welcome-title');
+      if (welcomeTitle) welcomeTitle.textContent = config.title;
+      
+      // Update categories
+      const catContainer = document.querySelector('.chat-categories');
+      if (catContainer) {
+        catContainer.innerHTML = config.categories.map(c => 
+          `<button class="chat-cat-pill" data-query="${c.query}">${c.emoji} ${c.text}</button>`
+        ).join('');
+        
+        // Re-attach event listeners
+        catContainer.querySelectorAll('.chat-cat-pill').forEach(pill => {
+          pill.addEventListener('click', () => {
+            sendChatMessage(pill.dataset.query);
+          });
+        });
+      }
+      
+      // Reset chat messages (keep welcome)
+      const messagesContainer = document.getElementById('chatMessages');
+      if (messagesContainer) {
+        messagesContainer.innerHTML = `
+          <div class="chat-welcome">
+            <div class="chat-welcome-icon">${config.icon}</div>
+            <div class="chat-welcome-title">${config.title}</div>
+            <div class="chat-welcome-sub">Seit 2007 · Executive Sales Program</div>
+          </div>
+          <div class="chat-message bot">
+            <div class="chat-msg-avatar">CF</div>
+            <div class="chat-msg-content">
+              <div class="chat-msg-bubble">${config.welcomeMsg}</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
     function switchGlobalTrack(trackId) {
       currentTrack = trackId;
       
@@ -5681,7 +6026,7 @@ Bis dann!
       safeSet('selectedTrack', trackId);
       
       // Show toast
-      const trackName = trackId === 'amy' ? '🏨 LS · Hotelmarketing' : '🎓 CF · Graduierung';
+      const trackName = trackId === 'amy' ? '🚀 LS · Premium Digital' : '🎓 CF · Graduierung';
       showToast('Modul aktiviert: ' + trackName);
     }
 
@@ -5885,85 +6230,6 @@ Bis dann!
     if (!chatSessionId) {
       chatSessionId = 'cf_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
       safeSet('cfChatSessionId', chatSessionId);
-    }
-    
-    const chatConfig = {
-      amy: {
-        icon: '🏨',
-        title: 'Concierge Assistant',
-        btnText: 'Concierge',
-        welcomeMsg: 'Hallo! 👋 Ich bin der LEVERAGE Strategies Concierge. Wie kann ich dir bei Hotel-Marketing und Direktbuchungen helfen?',
-        categories: [
-          { emoji: '📈', text: 'Direktbuchungen', query: 'Wie steigere ich Direktbuchungen?' },
-          { emoji: '🤖', text: 'AI Concierge', query: 'Was ist der AI Concierge?' },
-          { emoji: '💬', text: 'WhatsApp', query: 'Wie funktioniert WhatsApp Marketing?' },
-          { emoji: '📊', text: 'Analytics', query: 'Welche Analytics bietet ihr?' }
-        ]
-      },
-      leti: {
-        icon: '🎓',
-        title: 'Produktberater',
-        btnText: 'Berater',
-        welcomeMsg: 'Hallo! 👋 Ich bin der College Fashion Berater. Wie kann ich dir helfen? Suchst du Doktorhut, Talar, Schärpe oder etwas anderes für deine Feier?',
-        categories: [
-          { emoji: '🎓', text: 'Doktorhut', query: 'Zeig mir eure Doktorhüte' },
-          { emoji: '🎀', text: 'Schärpe', query: 'Was kosten eure Schärpen?' },
-          { emoji: '👔', text: 'Talar', query: 'Habt ihr Talare?' },
-          { emoji: '📦', text: 'Lieferzeit', query: 'Wie sind die Lieferzeiten?' }
-        ]
-      }
-    };
-
-    function updateChatConfig(track) {
-      currentChatTrack = track;
-      const config = chatConfig[track];
-      
-      // Update button text
-      const btnText = document.getElementById('aiBtnText');
-      if (btnText) btnText.textContent = config.btnText;
-      
-      // Update header
-      var chatIconEl = document.getElementById('chatIcon');
-      var chatTitleEl = document.getElementById('chatTitle');
-      if (chatIconEl) chatIconEl.textContent = config.icon;
-      if (chatTitleEl) chatTitleEl.textContent = config.title;
-      
-      // Update welcome
-      const welcomeTitle = document.querySelector('.chat-welcome-title');
-      if (welcomeTitle) welcomeTitle.textContent = config.title + ' Berater';
-      
-      // Update categories
-      const catContainer = document.querySelector('.chat-categories');
-      if (catContainer) {
-        catContainer.innerHTML = config.categories.map(c => 
-          `<button class="chat-cat-pill" data-query="${c.query}">${c.emoji} ${c.text}</button>`
-        ).join('');
-        
-        // Re-attach event listeners
-        catContainer.querySelectorAll('.chat-cat-pill').forEach(pill => {
-          pill.addEventListener('click', () => {
-            sendChatMessage(pill.dataset.query);
-          });
-        });
-      }
-      
-      // Reset chat messages (keep welcome)
-      const messagesContainer = document.getElementById('chatMessages');
-      if (messagesContainer) {
-        messagesContainer.innerHTML = `
-          <div class="chat-welcome">
-            <div class="chat-welcome-icon">${config.icon}</div>
-            <div class="chat-welcome-title">${config.title} Berater</div>
-            <div class="chat-welcome-sub">Seit 2007 · Executive Sales Program</div>
-          </div>
-          <div class="chat-message bot">
-            <div class="chat-msg-avatar">CF</div>
-            <div class="chat-msg-content">
-              <div class="chat-msg-bubble">${config.welcomeMsg}</div>
-            </div>
-          </div>
-        `;
-      }
     }
 
     function openChat() {
@@ -6189,7 +6455,7 @@ Bis dann!
         
         // Show welcome toast
         setTimeout(() => {
-          const trackName = selectedWelcomeTrack === 'amy' ? '🏨 LS · Hotelmarketing' : '🎓 CF · Graduierung';
+          const trackName = selectedWelcomeTrack === 'amy' ? '🚀 LS · Premium Digital' : '🎓 CF · Graduierung';
           showToast('Willkommen! Modul: ' + trackName);
         }, 600);
       });
