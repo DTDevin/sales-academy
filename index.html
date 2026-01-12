@@ -5467,63 +5467,109 @@ Bis dann!
 
   <script>
     // ═══════════════════════════════════════════════════════════
-    // AUTO CACHE RESET - Verhindert Blockaden durch korrupten Cache
-    // ═══════════════════════════════════════════════════════════
-    (function autoFixCache() {
-      try {
-        // Test ob localStorage funktioniert
-        var testKey = '__cache_test__';
-        localStorage.setItem(testKey, '1');
-        localStorage.removeItem(testKey);
-        
-        // Prüfe auf korrupte Daten
-        var version = localStorage.getItem('appVersion');
-        var currentVersion = '2.0'; // Bei Updates erhöhen
-        
-        if (version !== currentVersion) {
-          // Neue Version oder erster Start - Cache bereinigen
-          console.log('[Cache] Neue Version erkannt, bereinige Cache...');
-          
-          // Lösche nur App-spezifische Keys, nicht alles
-          var keysToReset = ['hasVisited', 'selectedTrack', 'todayStats', 'statsDate', 'streak', 'lastActiveDate', 'cfChatSessionId'];
-          keysToReset.forEach(function(key) {
-            try { localStorage.removeItem(key); } catch(e) {}
-          });
-          
-          // Setze Version
-          localStorage.setItem('appVersion', currentVersion);
-          console.log('[Cache] ✅ Cache bereinigt');
+    // ═══════════════════════════════════════════════════════════════════
+    // BULLETPROOF STORAGE - Funktioniert IMMER, mit Memory-Fallback
+    // ═══════════════════════════════════════════════════════════════════
+    var Storage = (function() {
+      var memoryStorage = {};  // Fallback wenn localStorage nicht verfügbar
+      var useLocalStorage = false;
+      var APP_VERSION = '3.0';
+      var APP_KEYS = ['hasVisited', 'selectedTrack', 'todayStats', 'statsDate', 'streak', 'lastActiveDate', 'cfChatSessionId', 'appVersion'];
+      
+      // Teste localStorage Verfügbarkeit
+      function testLocalStorage() {
+        try {
+          if (typeof localStorage === 'undefined') return false;
+          var testKey = '__storage_test_' + Date.now();
+          localStorage.setItem(testKey, 'test');
+          var result = localStorage.getItem(testKey);
+          localStorage.removeItem(testKey);
+          return result === 'test';
+        } catch (e) {
+          return false;
         }
-      } catch(e) {
-        // localStorage nicht verfügbar oder blockiert - kein Problem
-        console.warn('[Cache] localStorage nicht verfügbar:', e.message);
       }
+      
+      // Initialisierung
+      function init() {
+        useLocalStorage = testLocalStorage();
+        
+        if (useLocalStorage) {
+          // Prüfe Version und bereinige bei Bedarf
+          try {
+            var version = localStorage.getItem('appVersion');
+            if (version !== APP_VERSION) {
+              APP_KEYS.forEach(function(key) {
+                try { localStorage.removeItem(key); } catch(e) {}
+              });
+              localStorage.setItem('appVersion', APP_VERSION);
+            }
+          } catch (e) {
+            useLocalStorage = false;
+          }
+        }
+      }
+      
+      // GET - Holt Wert aus Storage oder Memory
+      function get(key) {
+        if (useLocalStorage) {
+          try {
+            return localStorage.getItem(key);
+          } catch (e) {
+            useLocalStorage = false;
+          }
+        }
+        return memoryStorage[key] || null;
+      }
+      
+      // SET - Speichert in Storage oder Memory
+      function set(key, value) {
+        memoryStorage[key] = value;  // Immer auch in Memory
+        
+        if (useLocalStorage) {
+          try {
+            localStorage.setItem(key, value);
+          } catch (e) {
+            useLocalStorage = false;
+          }
+        }
+      }
+      
+      // REMOVE - Löscht aus Storage und Memory
+      function remove(key) {
+        delete memoryStorage[key];
+        
+        if (useLocalStorage) {
+          try {
+            localStorage.removeItem(key);
+          } catch (e) {}
+        }
+      }
+      
+      // Init beim Laden
+      init();
+      
+      return { get: get, set: set, remove: remove };
     })();
-
-    // SAFE LOCALSTORAGE WRAPPER
-    function safeGet(key) {
-      try {
-        return localStorage.getItem(key);
-      } catch(e) {
-        return null;
-      }
-    }
-    function safeSet(key, value) {
-      try {
-        localStorage.setItem(key, value);
-      } catch(e) {}
-    }
+    
+    // Kompatibilitäts-Wrapper (für bestehenden Code)
+    function safeGet(key) { return Storage.get(key); }
+    function safeSet(key, value) { Storage.set(key, value); }
 
     // GLOBAL ERROR HANDLER - Verhindert dass Fehler die App blockieren
     window.onerror = function(msg, url, line, col, error) {
-      console.error('[App Error]', msg, 'Zeile:', line);
-      // App trotzdem weiterlaufen lassen
-      return true;
+      // Stille Fehlerbehandlung - nur bei Debug loggen
+      if (window.location.search.indexOf('debug') > -1) {
+        console.error('[App Error]', msg, 'Zeile:', line);
+      }
+      return true;  // Fehler als behandelt markieren
     };
 
     // UNHANDLED PROMISE REJECTION HANDLER
     window.addEventListener('unhandledrejection', function(event) {
-      console.error('[Promise Error]', event.reason);
+      if (window.location.search.indexOf('debug') > -1) {
+        console.error('[Promise Error]', event.reason);
+      }
       event.preventDefault();
     });
 
@@ -5544,22 +5590,29 @@ Bis dann!
       // Streak
       const today = new Date().toDateString();
       const lastActive = safeGet('lastActiveDate');
-      streak = parseInt(safeGet('streak') || '0');
+      var streakVal = safeGet('streak');
+      streak = (streakVal && !isNaN(parseInt(streakVal))) ? parseInt(streakVal) : 0;
 
       if (lastActive !== today) {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         streak = (lastActive === yesterday.toDateString()) ? streak + 1 : 1;
-        safeSet('streak', streak);
+        safeSet('streak', String(streak));
         safeSet('lastActiveDate', today);
       }
-      document.getElementById('streak-count').textContent = streak;
+      var streakEl = document.getElementById('streak-count');
+      if (streakEl) streakEl.textContent = streak;
 
       // Stats
       const saved = safeGet('todayStats');
       const savedDate = safeGet('statsDate');
       if (saved && savedDate === today) {
-        stats = JSON.parse(saved);
+        try {
+          stats = JSON.parse(saved);
+        } catch(e) {
+          // Korrupte Daten - reset
+          stats = { calls: 0, conversations: 0, appointments: 0 };
+        }
         updateStats();
       }
 
@@ -5568,7 +5621,8 @@ Bis dann!
 
       // Quote
       const quote = quotes[Math.floor(Math.random() * quotes.length)];
-      document.getElementById('quote-text').textContent = `"${quote}"`;
+      var quoteEl = document.getElementById('quote-text');
+      if (quoteEl) quoteEl.textContent = `"${quote}"`;
     }
 
     function updateGreeting() {
@@ -5576,7 +5630,8 @@ Bis dann!
       let greeting = 'Guten Morgen';
       if (hour >= 12 && hour < 17) greeting = 'Guten Tag';
       if (hour >= 17) greeting = 'Guten Abend';
-      document.getElementById('greeting').textContent = greeting;
+      var greetingEl = document.getElementById('greeting');
+      if (greetingEl) greetingEl.textContent = greeting;
     }
 
     // ========== NAVIGATION ==========
@@ -5596,7 +5651,8 @@ Bis dann!
       
       // Update global switcher in header
       document.querySelectorAll('.track-toggle').forEach(t => t.classList.remove('active'));
-      document.querySelector(`.track-toggle[data-track="${trackId}"]`).classList.add('active');
+      var activeToggle = document.querySelector(`.track-toggle[data-track="${trackId}"]`);
+      if (activeToggle) activeToggle.classList.add('active');
       
       // Update track tabs in script view
       document.querySelectorAll('.track-tab').forEach(t => t.classList.remove('active'));
@@ -5663,10 +5719,11 @@ Bis dann!
         item.classList.toggle('done');
         const all = document.querySelectorAll('.ritual-item');
         const done = document.querySelectorAll('.ritual-item.done').length;
-        document.getElementById('ritual-status').textContent = `${done}/${all.length}`;
+        var statusEl = document.getElementById('ritual-status');
+        if (statusEl) statusEl.textContent = `${done}/${all.length}`;
         
         if (done === all.length) {
-          showToast('Ritual komplett! Los geht\'s ✨');
+          showToast('Ritual komplett! Bereit für den Erfolg ✨');
           triggerConfetti();
         }
       });
@@ -5674,13 +5731,15 @@ Bis dann!
 
     // ========== CALLS ==========
     function logCall() {
-      stats.calls++;
+      stats.calls = (stats.calls || 0) + 1;
       updateStats();
       saveStats();
       
-      const fab = document.getElementById('fab');
-      fab.style.transform = 'scale(0.92)';
-      setTimeout(() => fab.style.transform = '', 150);
+      var fab = document.getElementById('fab');
+      if (fab) {
+        fab.style.transform = 'scale(0.92)';
+        setTimeout(() => fab.style.transform = '', 150);
+      }
       
       showToast('Kontakt erfasst');
       
@@ -5690,33 +5749,42 @@ Bis dann!
 
     // Double tap = Termin
     let lastTap = 0;
-    document.getElementById('fab').addEventListener('touchend', e => {
-      const now = Date.now();
-      if (now - lastTap < 300) {
-        e.preventDefault();
-        stats.termine++;
-        stats.connects++;
-        updateStats();
-        saveStats();
-        showToast('🎯 Abschluss verbucht!');
-        triggerConfetti();
-      }
-      lastTap = now;
-    });
+    var fabTouchEl = document.getElementById('fab');
+    if (fabTouchEl) {
+      fabTouchEl.addEventListener('touchend', e => {
+        const now = Date.now();
+        if (now - lastTap < 300) {
+          e.preventDefault();
+          stats.termine = (stats.termine || 0) + 1;
+          stats.connects = (stats.connects || 0) + 1;
+          updateStats();
+          saveStats();
+          showToast('🎯 Abschluss verbucht!');
+          triggerConfetti();
+        }
+        lastTap = now;
+      });
+    }
 
     function updateStats() {
-      document.getElementById('stat-calls').textContent = stats.calls;
-      document.getElementById('stat-connects').textContent = stats.connects;
-      document.getElementById('stat-termine').textContent = stats.termine;
+      var callsEl = document.getElementById('stat-calls');
+      var connectsEl = document.getElementById('stat-connects');
+      var termineEl = document.getElementById('stat-termine');
+      var progressEl = document.getElementById('progress-bar');
+      var successEl = document.getElementById('success-rate');
+      
+      if (callsEl) callsEl.textContent = stats.calls || 0;
+      if (connectsEl) connectsEl.textContent = stats.connects || 0;
+      if (termineEl) termineEl.textContent = stats.termine || 0;
       
       // Update progress bar
-      const progress = Math.min(stats.calls / 10 * 100, 100);
-      document.getElementById('progress-bar').style.width = progress + '%';
+      const progress = Math.min((stats.calls || 0) / 10 * 100, 100);
+      if (progressEl) progressEl.style.width = progress + '%';
       
       // Update success rate
-      if (stats.calls > 0) {
+      if (stats.calls > 0 && successEl) {
         const rate = Math.round((stats.termine / stats.calls) * 100);
-        document.getElementById('success-rate').textContent = rate + '% Erfolg';
+        successEl.textContent = rate + '% Erfolg';
       }
     }
 
@@ -5733,10 +5801,12 @@ Bis dann!
       
       // Switch View
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById('view-' + viewId).classList.add('active');
+      var viewEl = document.getElementById('view-' + viewId);
+      if (viewEl) viewEl.classList.add('active');
       
       // Scroll to top smoothly
-      document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+      var mainEl = document.querySelector('.main');
+      if (mainEl) mainEl.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
     // ========== DESKTOP NAVIGATION ==========
@@ -5853,8 +5923,10 @@ Bis dann!
       if (btnText) btnText.textContent = config.btnText;
       
       // Update header
-      document.getElementById('chatIcon').textContent = config.icon;
-      document.getElementById('chatTitle').textContent = config.title;
+      var chatIconEl = document.getElementById('chatIcon');
+      var chatTitleEl = document.getElementById('chatTitle');
+      if (chatIconEl) chatIconEl.textContent = config.icon;
+      if (chatTitleEl) chatTitleEl.textContent = config.title;
       
       // Update welcome
       const welcomeTitle = document.querySelector('.chat-welcome-title');
@@ -5895,18 +5967,20 @@ Bis dann!
     }
 
     function openChat() {
-      const overlay = document.getElementById('chatOverlay');
+      var overlay = document.getElementById('chatOverlay');
+      if (!overlay) return;
       overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
       
       setTimeout(() => {
-        const input = document.getElementById('chatInput');
+        var input = document.getElementById('chatInput');
         if (input) input.focus();
       }, 300);
     }
 
     function closeChat() {
-      document.getElementById('chatOverlay').classList.remove('open');
+      var overlay = document.getElementById('chatOverlay');
+      if (overlay) overlay.classList.remove('open');
       document.body.style.overflow = '';
     }
 
@@ -6030,12 +6104,17 @@ Bis dann!
     });
 
     // ========== CHAT EVENT LISTENERS ==========
-    document.getElementById('aiBtn').addEventListener('click', openChat);
-    document.getElementById('chatClose').addEventListener('click', closeChat);
-    document.getElementById('chatOverlay').addEventListener('click', (e) => {
+    var aiBtnEl = document.getElementById('aiBtn');
+    var chatCloseEl = document.getElementById('chatClose');
+    var chatOverlayEl = document.getElementById('chatOverlay');
+    var chatPanelEl = document.getElementById('chatPanel');
+    
+    if (aiBtnEl) aiBtnEl.addEventListener('click', openChat);
+    if (chatCloseEl) chatCloseEl.addEventListener('click', closeChat);
+    if (chatOverlayEl) chatOverlayEl.addEventListener('click', (e) => {
       if (e.target === e.currentTarget) closeChat();
     });
-    document.getElementById('chatPanel').addEventListener('click', (e) => {
+    if (chatPanelEl) chatPanelEl.addEventListener('click', (e) => {
       e.stopPropagation();
     });
 
@@ -6069,17 +6148,18 @@ Bis dann!
     });
 
     // ========== FAB EVENT LISTENER ==========
-    document.getElementById('fab').addEventListener('click', logCall);
+    var fabEl = document.getElementById('fab');
+    if (fabEl) fabEl.addEventListener('click', logCall);
 
     // ========== WELCOME SCREEN ==========
-    const welcomeOverlay = document.getElementById('welcomeOverlay');
-    const welcomeStart = document.getElementById('welcomeStart');
+    var welcomeOverlay = document.getElementById('welcomeOverlay');
+    var welcomeStart = document.getElementById('welcomeStart');
     let selectedWelcomeTrack = 'amy';
 
     // Check if first visit
     if (safeGet('hasVisited')) {
       // Not first visit - hide welcome screen immediately
-      welcomeOverlay.classList.add('hidden');
+      if (welcomeOverlay) welcomeOverlay.classList.add('hidden');
     } else {
       // First visit - show welcome screen
       document.body.style.overflow = 'hidden';
@@ -6095,23 +6175,25 @@ Bis dann!
     });
 
     // Start button
-    welcomeStart.addEventListener('click', () => {
-      // Save first visit
-      safeSet('hasVisited', 'true');
-      
-      // Set selected track
-      switchGlobalTrack(selectedWelcomeTrack);
-      
-      // Hide welcome screen with animation
-      welcomeOverlay.classList.add('hidden');
-      document.body.style.overflow = '';
-      
-      // Show welcome toast
-      setTimeout(() => {
-        const trackName = selectedWelcomeTrack === 'amy' ? '🏨 LS · Hotelmarketing' : '🎓 CF · Graduierung';
-        showToast('Willkommen! Modul: ' + trackName);
-      }, 600);
-    });
+    if (welcomeStart) {
+      welcomeStart.addEventListener('click', () => {
+        // Save first visit
+        safeSet('hasVisited', 'true');
+        
+        // Set selected track
+        switchGlobalTrack(selectedWelcomeTrack);
+        
+        // Hide welcome screen with animation
+        if (welcomeOverlay) welcomeOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+        
+        // Show welcome toast
+        setTimeout(() => {
+          const trackName = selectedWelcomeTrack === 'amy' ? '🏨 LS · Hotelmarketing' : '🎓 CF · Graduierung';
+          showToast('Willkommen! Modul: ' + trackName);
+        }, 600);
+      });
+    }
 
     // Initialize (chat config is set by switchGlobalTrack if saved, otherwise defaults to amy)
     if (!safeGet('selectedTrack')) {
