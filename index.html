@@ -83,10 +83,11 @@
     }
 
     /* Better touch targets */
-    button, .nav-item, .track-tab, .quick-action, .ritual-item, .ai-btn, .fab {
+    button, .nav-item, .track-tab, .quick-action, .ritual-item, .ai-btn, .fab, .welcome-track, .welcome-start, .chat-cat-pill, .chat-send {
       cursor: pointer;
       -webkit-user-select: none;
       user-select: none;
+      -webkit-touch-callout: none;
     }
     
     /* Accessibility Focus States */
@@ -1590,6 +1591,7 @@
       text-align: center;
       max-width: 380px;
       position: relative;
+      z-index: 1;
       animation: welcomeFadeIn 1s var(--ease-out) forwards;
     }
     @keyframes welcomeFadeIn {
@@ -1611,6 +1613,7 @@
       height: 300px;
       background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
       pointer-events: none;
+      z-index: -1;
       animation: welcomeGlow 4s ease-in-out infinite;
     }
     @keyframes welcomeGlow {
@@ -1698,15 +1701,24 @@
       align-items: center;
       gap: 6px;
       padding: 20px 16px;
+      min-height: 100px;
       background: var(--bg-card);
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       cursor: pointer;
       transition: all 0.3s var(--ease-out);
+      -webkit-appearance: none;
+      appearance: none;
+      position: relative;
+      z-index: 5;
     }
     .welcome-track:hover {
       border-color: var(--border-subtle);
       transform: translateY(-2px);
+    }
+    .welcome-track:active {
+      transform: translateY(0) scale(0.98);
+      transition-duration: 0.1s;
     }
     .welcome-track.selected {
       border-color: var(--champagne);
@@ -1747,8 +1759,11 @@
     .welcome-start {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       padding: 16px 32px;
+      min-height: 54px;
+      min-width: 180px;
       background: linear-gradient(135deg, var(--champagne), #B8973A);
       border: none;
       border-radius: 99px;
@@ -1758,10 +1773,18 @@
       cursor: pointer;
       transition: all 0.3s var(--ease-out);
       box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+      -webkit-appearance: none;
+      appearance: none;
+      position: relative;
+      z-index: 10;
     }
     .welcome-start:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+    }
+    .welcome-start:active {
+      transform: translateY(0) scale(0.98);
+      transition-duration: 0.1s;
     }
     .welcome-start svg {
       width: 18px;
@@ -3412,55 +3435,62 @@
 <body>
 
   <!-- Welcome Screen -->
-  <div class="welcome-overlay" id="welcomeOverlay">
+  <noscript>
+    <style>
+      .welcome-overlay { display: none !important; }
+      .app { display: block !important; }
+    </style>
+  </noscript>
+
+  <div class="welcome-overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
     <div class="welcome-content">
-      <div class="welcome-glow"></div>
+      <div class="welcome-glow" aria-hidden="true"></div>
       
       <div class="welcome-badge">Premium Sales Training</div>
       
-      <h1 class="welcome-title">Sales Academy</h1>
+      <h1 class="welcome-title" id="welcomeTitle">Sales Academy</h1>
       
       <p class="welcome-subtitle">Dein Coach für erfolgreiche Calls</p>
       
-      <div class="welcome-features">
+      <div class="welcome-features" aria-label="Features">
         <div class="welcome-feature">
-          <span class="welcome-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></span>
+          <span class="welcome-feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></span>
           <span>Skripte & Einwände</span>
         </div>
         <div class="welcome-feature">
-          <span class="welcome-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
+          <span class="welcome-feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
           <span>Preise & ROI</span>
         </div>
         <div class="welcome-feature">
-          <span class="welcome-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <span class="welcome-feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
           <span>Tägliche Ziele</span>
         </div>
       </div>
       
-      <div class="welcome-track-select">
-        <div class="welcome-track-label">Wähle deinen Track:</div>
+      <div class="welcome-track-select" role="radiogroup" aria-label="Track auswählen">
+        <div class="welcome-track-label" id="trackLabel">Wähle deinen Track:</div>
         <div class="welcome-tracks">
-          <button class="welcome-track selected" data-track="amy">
-            <span class="welcome-track-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg></span>
+          <button class="welcome-track selected" data-track="amy" role="radio" aria-checked="true" tabindex="0" aria-describedby="trackLabel">
+            <span class="welcome-track-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/><path d="M8 14v3M12 14v3M16 14v3"/></svg></span>
             <span class="welcome-track-name">Amy</span>
             <span class="welcome-track-desc">Hotels & Hospitality</span>
           </button>
-          <button class="welcome-track" data-track="leti">
-            <span class="welcome-track-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></span>
+          <button class="welcome-track" data-track="leti" role="radio" aria-checked="false" tabindex="0" aria-describedby="trackLabel">
+            <span class="welcome-track-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></span>
             <span class="welcome-track-name">Leti</span>
             <span class="welcome-track-desc">Unis & Hochschulen</span>
           </button>
         </div>
       </div>
       
-      <button class="welcome-start" id="welcomeStart">
+      <button class="welcome-start" id="welcomeStart" type="button" aria-label="Los geht's - App starten">
         <span>Los geht's</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </button>
       
-      <div class="welcome-footer">
+      <div class="welcome-footer" aria-label="Footer">
         <span>Powered by</span>
         <span class="welcome-brand">EXTRA Group GmbH</span>
       </div>
@@ -5600,51 +5630,134 @@ Bis dann!
     document.getElementById('fab').addEventListener('click', logCall);
 
     // ========== WELCOME SCREEN ==========
-    const welcomeOverlay = document.getElementById('welcomeOverlay');
-    const welcomeStart = document.getElementById('welcomeStart');
-    let selectedWelcomeTrack = 'amy';
+    (function initWelcomeScreen() {
+      const welcomeOverlay = document.getElementById('welcomeOverlay');
+      const welcomeStart = document.getElementById('welcomeStart');
+      const welcomeTracks = document.querySelectorAll('.welcome-track');
+      
+      // Safety check - if elements don't exist, skip
+      if (!welcomeOverlay || !welcomeStart) {
+        console.warn('[Welcome] Elements not found');
+        return;
+      }
+      
+      let selectedWelcomeTrack = 'amy';
 
-    // Check if first visit
-    if (localStorage.getItem('hasVisited')) {
-      // Not first visit - hide welcome screen immediately
-      welcomeOverlay.classList.add('hidden');
-    } else {
-      // First visit - show welcome screen
-      document.body.style.overflow = 'hidden';
-    }
+      // Safe localStorage access
+      function safeGetItem(key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          console.warn('[Storage] localStorage not available');
+          return null;
+        }
+      }
+      
+      function safeSetItem(key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch (e) {
+          console.warn('[Storage] Could not save to localStorage');
+        }
+      }
 
-    // Track selection in welcome screen
-    document.querySelectorAll('.welcome-track').forEach(track => {
-      track.addEventListener('click', () => {
-        document.querySelectorAll('.welcome-track').forEach(t => t.classList.remove('selected'));
+      // Check if first visit
+      if (safeGetItem('hasVisited')) {
+        // Not first visit - hide welcome screen immediately
+        welcomeOverlay.classList.add('hidden');
+        welcomeOverlay.setAttribute('aria-hidden', 'true');
+      } else {
+        // First visit - show welcome screen
+        document.body.style.overflow = 'hidden';
+        welcomeOverlay.setAttribute('aria-hidden', 'false');
+        
+        // Focus first interactive element for accessibility
+        setTimeout(() => {
+          const firstTrack = document.querySelector('.welcome-track');
+          if (firstTrack) firstTrack.focus();
+        }, 500);
+      }
+
+      // Track selection handler
+      function selectTrack(track) {
+        welcomeTracks.forEach(t => t.classList.remove('selected'));
         track.classList.add('selected');
-        selectedWelcomeTrack = track.dataset.track;
+        selectedWelcomeTrack = track.dataset.track || 'amy';
+      }
+
+      // Track selection in welcome screen
+      welcomeTracks.forEach(track => {
+        // Click event
+        track.addEventListener('click', (e) => {
+          e.preventDefault();
+          selectTrack(track);
+        });
+        
+        // Touch event for mobile
+        track.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          selectTrack(track);
+        }, { passive: false });
+        
+        // Keyboard support
+        track.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectTrack(track);
+          }
+        });
       });
-    });
 
-    // Start button
-    welcomeStart.addEventListener('click', () => {
-      // Save first visit
-      localStorage.setItem('hasVisited', 'true');
+      // Start button handler
+      function handleStart(e) {
+        if (e) e.preventDefault();
+        
+        // Save first visit
+        safeSetItem('hasVisited', 'true');
+        
+        // Set selected track
+        if (typeof switchGlobalTrack === 'function') {
+          switchGlobalTrack(selectedWelcomeTrack);
+        }
+        
+        // Hide welcome screen with animation
+        welcomeOverlay.classList.add('hidden');
+        welcomeOverlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        
+        // Show welcome toast
+        setTimeout(() => {
+          const trackName = selectedWelcomeTrack === 'amy' ? '🏨 Amy · Hotels' : '🎓 Leti · Unis';
+          if (typeof showToast === 'function') {
+            showToast('Willkommen! Track: ' + trackName);
+          }
+        }, 600);
+      }
       
-      // Set selected track
-      switchGlobalTrack(selectedWelcomeTrack);
-      
-      // Hide welcome screen with animation
-      welcomeOverlay.classList.add('hidden');
-      document.body.style.overflow = '';
-      
-      // Show welcome toast
-      setTimeout(() => {
-        const trackName = selectedWelcomeTrack === 'amy' ? '🏨 Amy · Hotels' : '🎓 Leti · Unis';
-        showToast('Willkommen! Track: ' + trackName);
-      }, 600);
-    });
+      // Multiple event types for maximum compatibility
+      welcomeStart.addEventListener('click', handleStart);
+      welcomeStart.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        handleStart(e);
+      }, { passive: false });
+      welcomeStart.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleStart(e);
+        }
+      });
+    })();
 
-    // Initialize (chat config is set by switchGlobalTrack if saved, otherwise defaults to amy)
-    if (!localStorage.getItem('selectedTrack')) {
-      updateChatConfig('leti');
-    }
+    // Initialize (chat config is set by switchGlobalTrack if saved, otherwise defaults)
+    (function initApp() {
+      try {
+        if (!localStorage.getItem('selectedTrack')) {
+          updateChatConfig('leti');
+        }
+      } catch (e) {
+        updateChatConfig('leti');
+      }
+    })();
 
     init();
   </script>
