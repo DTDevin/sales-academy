@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anmelden · Sales Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08090A;
+      --bg-card: #111214;
+      --border: rgba(255,255,255,0.06);
+      --champagne: #D4AF37;
+      --champagne-light: #E8D5A3;
+      --text: #F5F5F5;
+      --text-muted: rgba(245,245,245,0.5);
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: var(--champagne-light);
+    }
+    .sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+    .tab {
+      flex: 1;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab.active {
+      background: rgba(212,175,55,0.1);
+      border-color: var(--champagne);
+      color: var(--champagne-light);
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--champagne);
+      box-shadow: 0 0 0 2px rgba(212,175,55,0.15);
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--champagne), #c9a44a);
+      border: none;
+      border-radius: var(--radius);
+      color: #0a0a0a;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button[type="submit"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212,175,55,0.35);
+    }
+    button[type="submit"]:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .error {
+      font-size: 13px;
+      color: #f87171;
+      margin-bottom: 12px;
+      min-height: 20px;
+    }
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--champagne);
+      text-decoration: none;
+    }
+    .back:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Sales Academy</h1>
+    <p class="sub">Anmelden oder Konto anlegen</p>
+
+    <div class="tabs">
+      <button type="button" class="tab active" data-panel="login">Anmelden</button>
+      <button type="button" class="tab" data-panel="register">Registrieren</button>
+    </div>
+
+    <div id="panel-login" class="panel active">
+      <form id="formLogin">
+        <div class="error" id="errorLogin"></div>
+        <label for="loginEmail">E-Mail</label>
+        <input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="name@beispiel.de">
+        <label for="loginPassword">Passwort</label>
+        <input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="••••••••">
+        <button type="submit">Anmelden</button>
+      </form>
+    </div>
+
+    <div id="panel-register" class="panel">
+      <form id="formRegister">
+        <div class="error" id="errorRegister"></div>
+        <label for="regEmail">E-Mail</label>
+        <input type="email" id="regEmail" name="email" required autocomplete="email" placeholder="name@beispiel.de">
+        <label for="regPassword">Passwort (min. 8 Zeichen)</label>
+        <input type="password" id="regPassword" name="password" required minlength="8" autocomplete="new-password" placeholder="••••••••">
+        <button type="submit">Konto anlegen</button>
+      </form>
+    </div>
+
+    <a href="#" id="backToAcademy" class="back">← Zurück zur Academy</a>
+  </div>
+
+  <script>
+    (function() {
+      var p = new URLSearchParams(window.location.search);
+      if (p.get('api')) {
+        window.API_BASE = p.get('api');
+      } else if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        // Produktion: Backend-URL
+        window.API_BASE = window.SALES_ACADEMY_API || 'https://sales-academy-api.up.railway.app';
+      }
+      var API_BASE = window.API_BASE || 'http://localhost:4000';
+      function indexUrl() { return p.get('api') ? 'index.html?api=' + encodeURIComponent(p.get('api')) : 'index.html'; }
+      var backEl = document.getElementById('backToAcademy');
+      if (backEl) backEl.href = indexUrl();
+
+      function showError(panel, msg) {
+        var el = document.getElementById('error' + (panel === 'login' ? 'Login' : 'Register'));
+        if (el) { el.textContent = msg || ''; }
+      }
+
+      function setLoading(form, loading) {
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = loading;
+      }
+
+      document.querySelectorAll('.tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var panel = tab.dataset.panel;
+          document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+          document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+          tab.classList.add('active');
+          var p = document.getElementById('panel-' + panel);
+          if (p) p.classList.add('active');
+          showError('login', '');
+          showError('register', '');
+        });
+      });
+
+      document.getElementById('formLogin').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var email = document.getElementById('loginEmail').value.trim();
+        var password = document.getElementById('loginPassword').value;
+        showError('login', '');
+        setLoading(this, true);
+        fetch(API_BASE + '/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: password }),
+          credentials: 'include'
+        })
+          .then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }); })
+          .then(function(result) {
+            setLoading(document.getElementById('formLogin'), false);
+            if (result.ok) {
+              if (result.data.accessToken) localStorage.setItem('accessToken', result.data.accessToken);
+              window.location.href = indexUrl();
+            } else {
+              showError('login', result.data.error || 'Anmeldung fehlgeschlagen.');
+            }
+          })
+          .catch(function() {
+            setLoading(document.getElementById('formLogin'), false);
+            showError('login', 'Netzwerkfehler. API erreichbar?');
+          });
+      });
+
+      document.getElementById('formRegister').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var email = document.getElementById('regEmail').value.trim();
+        var password = document.getElementById('regPassword').value;
+        showError('register', '');
+        if (password.length < 8) {
+          showError('register', 'Passwort mindestens 8 Zeichen.');
+          return;
+        }
+        setLoading(this, true);
+        fetch(API_BASE + '/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: password }),
+          credentials: 'include'
+        })
+          .then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }); })
+          .then(function(result) {
+            setLoading(document.getElementById('formRegister'), false);
+            if (result.ok) {
+              if (result.data.accessToken) localStorage.setItem('accessToken', result.data.accessToken);
+              window.location.href = indexUrl();
+            } else {
+              showError('register', result.data.error || 'Registrierung fehlgeschlagen.');
+            }
+          })
+          .catch(function() {
+            setLoading(document.getElementById('formRegister'), false);
+            showError('register', 'Netzwerkfehler. API erreichbar?');
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
