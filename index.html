@@ -1962,55 +1962,79 @@
       fill: none;
     }
 
-    /* Header Actions Container */
+    /* Header Actions Container - FIXED vertical alignment */
     .header-actions {
       display: flex;
       align-items: center;
       gap: 12px;
       margin-left: auto;
       flex-shrink: 0;
-      height: 40px;
     }
     
-    /* Auth block (Header) */
+    /* Ensure all header elements are vertically centered */
+    .header-inner > * {
+      flex-shrink: 0;
+    }
+    
+    /* Auth block (Header) - FIXED alignment */
     .auth-block {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-shrink: 0;
-      height: 100%;
     }
     
-    /* Theme Toggle in Header - immer vertikal zentriert */
+    /* Theme Toggle in Header - FIXED: same height as auth button */
     .header-actions .theme-toggle {
       position: relative !important;
       top: auto !important;
       right: auto !important;
       margin: 0;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
-    /* Mobile: Smaller gap and hide text */
+    /* Mobile: Smaller gap */
     @media (max-width: 767px) {
       .header-actions {
         gap: 8px;
-        height: 36px;
       }
       .auth-link {
-        padding: 5px 10px;
+        padding: 6px 12px;
         font-size: 11px;
+        height: 32px;
+        display: flex;
+        align-items: center;
       }
       .header-actions .theme-toggle {
         width: 32px;
         height: 32px;
       }
+      .auth-logout {
+        padding: 6px 10px;
+        font-size: 10px;
+        height: 32px;
+      }
     }
     
-    /* Desktop: Größere Touch-Targets */
+    /* Desktop: Gleiche Höhe für alle Buttons */
     @media (min-width: 768px) {
       .header-actions {
         gap: 14px;
-        height: 44px;
+      }
+      .auth-link {
+        height: 40px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+      }
+      .auth-logout {
+        height: 40px;
+        padding: 0 14px;
+        display: flex;
+        align-items: center;
       }
       .header-actions .theme-toggle {
         width: 40px;
@@ -2116,26 +2140,28 @@
       }
     }
 
-    /* Bottom Navigation - Modern Scrollable Design */
+    /* ═══════════════════════════════════════════════════════════════
+       MOBILE BOTTOM NAVIGATION - Enterprise Redesign
+       ═══════════════════════════════════════════════════════════════ */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      padding: 8px 0;
-      padding-bottom: max(8px, env(safe-area-inset-bottom));
+      padding: 6px 0;
+      padding-bottom: max(6px, env(safe-area-inset-bottom));
       background: rgba(10, 10, 11, 0.98);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border-top: 1px solid rgba(212, 175, 55, 0.1);
-      display: none; /* Hidden by default */
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      display: block;
     }
     
-    /* Show on Mobile only */
-    @media (max-width: 767px) {
+    /* Hide on Desktop */
+    @media (min-width: 768px) {
       .bottom-nav {
-        display: block !important;
+        display: none !important;
       }
     }
     
@@ -2155,18 +2181,20 @@
     .nav-inner::-webkit-scrollbar {
       display: none;
     }
+    
+    /* Nav Items - Optimiert für 9 Items */
     .nav-item {
       flex: 0 0 auto;
-      min-width: 56px;
-      width: calc((100% - 14px) / 8);
+      width: calc((100% - 16px) / 5); /* 5 sichtbar, Rest scrollbar */
+      min-width: 52px;
       max-width: 72px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 2px;
-      padding: 8px 2px 6px;
-      min-height: 52px;
+      padding: 6px 2px 4px;
+      min-height: 50px;
       background: none;
       border: none;
       border-radius: 8px;
@@ -2176,61 +2204,130 @@
       color: var(--text-muted);
       position: relative;
       -webkit-tap-highlight-color: transparent;
-      scroll-snap-align: center;
     }
+    
+    /* Active Indicator */
     .nav-item::after {
       content: '';
       position: absolute;
-      bottom: 4px;
+      bottom: 2px;
       left: 50%;
       transform: translateX(-50%) scale(0);
       width: 4px;
       height: 4px;
       background: var(--champagne);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--champagne);
+      box-shadow: 0 0 6px var(--champagne);
       transition: transform 0.2s ease;
     }
+    
     .nav-item:hover {
       color: var(--text-secondary);
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.04);
     }
+    
+    .nav-item:active {
+      transform: scale(0.95);
+    }
+    
     .nav-item.active {
       color: var(--champagne-light);
-      background: rgba(212, 175, 55, 0.08);
+      background: rgba(212, 175, 55, 0.1);
     }
+    
     .nav-item.active::after {
       transform: translateX(-50%) scale(1);
     }
+    
     .nav-item.active .nav-icon {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
+    
     .nav-item.active .nav-icon svg {
       stroke: var(--champagne-light);
     }
+    
     .nav-icon {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: transform 0.2s ease;
     }
+    
     .nav-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       stroke: currentColor;
       transition: stroke 0.2s ease;
     }
+    
     .nav-label {
-      font-size: 8px;
+      font-size: 7px;
       font-weight: 600;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
       text-transform: uppercase;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
+      line-height: 1.2;
+    }
+    
+    /* Scroll Indicator - zeigt dass mehr Items vorhanden sind */
+    .bottom-nav::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      bottom: max(6px, env(safe-area-inset-bottom));
+      right: 0;
+      width: 24px;
+      background: linear-gradient(90deg, transparent, rgba(10, 10, 11, 0.95));
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    
+    /* iPhone SE und kleine Geräte */
+    @media (max-width: 374px) {
+      .nav-item {
+        width: calc((100% - 12px) / 4);
+        min-width: 48px;
+        padding: 5px 2px 3px;
+        min-height: 46px;
+      }
+      .nav-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+      .nav-label {
+        font-size: 6px;
+      }
+    }
+    
+    /* Standard Mobile (375px - 480px) */
+    @media (min-width: 375px) and (max-width: 480px) {
+      .nav-item {
+        width: calc((100% - 14px) / 5);
+        min-width: 54px;
+      }
+    }
+    
+    /* Größere Mobile Geräte (481px - 767px) */
+    @media (min-width: 481px) and (max-width: 767px) {
+      .nav-item {
+        width: calc((100% - 20px) / 7);
+        min-width: 60px;
+        max-width: 80px;
+      }
+      .nav-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+      .nav-label {
+        font-size: 8px;
+      }
     }
 
     /* Desktop Navigation - Hidden by default on mobile */
@@ -4785,13 +4882,30 @@
       }
     }
     
-    /* Sehr kleine Bildschirme - nur Icons */
+    /* Sehr kleine Bildschirme - kompakter */
+    @media (max-width: 360px) {
+      .nav-label {
+        font-size: 8px;
+        letter-spacing: -0.3px;
+      }
+      .nav-item {
+        min-height: 48px;
+        padding: 6px 2px 4px;
+        gap: 2px;
+      }
+      .nav-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+    
+    /* Extrem kleine Bildschirme - nur Icons */
     @media (max-width: 320px) {
       .nav-label {
         display: none;
       }
       .nav-item {
-        min-height: 40px;
+        min-height: 44px;
         padding: 8px 2px;
       }
     }
@@ -7950,10 +8064,19 @@
             padding: 0;
             margin: 0;
           }
+          /* Mobile: Korrigierte Höhe mit Bottom-Nav */
           @media (max-width: 767px) {
             #view-teamchat {
-              height: calc(100vh - 200px);
-              min-height: 400px;
+              height: calc(100vh - 140px);
+              min-height: 350px;
+              margin-bottom: 70px;
+            }
+          }
+          /* Sehr kleine Geräte */
+          @media (max-width: 374px) {
+            #view-teamchat {
+              height: calc(100vh - 130px);
+              min-height: 300px;
             }
           }
           #view-teamchat.active {
