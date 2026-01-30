@@ -1966,9 +1966,10 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       margin-left: auto;
       flex-shrink: 0;
+      height: 40px;
     }
     
     /* Auth block (Header) */
@@ -1977,20 +1978,43 @@
       align-items: center;
       gap: 10px;
       flex-shrink: 0;
+      height: 100%;
+    }
+    
+    /* Theme Toggle in Header - immer vertikal zentriert */
+    .header-actions .theme-toggle {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      margin: 0;
+      flex-shrink: 0;
     }
     
     /* Mobile: Smaller gap and hide text */
     @media (max-width: 767px) {
       .header-actions {
-        gap: 6px;
+        gap: 8px;
+        height: 36px;
       }
       .auth-link {
         padding: 5px 10px;
         font-size: 11px;
       }
-      .theme-toggle {
+      .header-actions .theme-toggle {
         width: 32px;
         height: 32px;
+      }
+    }
+    
+    /* Desktop: Größere Touch-Targets */
+    @media (min-width: 768px) {
+      .header-actions {
+        gap: 14px;
+        height: 44px;
+      }
+      .header-actions .theme-toggle {
+        width: 40px;
+        height: 40px;
       }
     }
     .auth-link {
@@ -2122,29 +2146,33 @@
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      padding: 0 8px;
-      gap: 0;
-      justify-content: space-between;
+      padding: 0 4px;
+      gap: 2px;
+      justify-content: flex-start;
+      align-items: stretch;
+      width: 100%;
     }
     .nav-inner::-webkit-scrollbar {
       display: none;
     }
     .nav-item {
-      flex: 1 1 auto;
-      min-width: 44px;
-      max-width: 70px;
+      flex: 0 0 auto;
+      min-width: 56px;
+      width: calc((100% - 14px) / 8);
+      max-width: 72px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 3px;
-      padding: 6px 4px;
-      min-height: 48px;
+      gap: 2px;
+      padding: 8px 2px 6px;
+      min-height: 52px;
       background: none;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
+      scroll-snap-align: start;
       color: var(--text-muted);
       position: relative;
       -webkit-tap-highlight-color: transparent;
@@ -4705,17 +4733,66 @@
     /* Bottom Navigation Mobile Refinements */
     @media (max-width: 767px) {
       .bottom-nav {
-        padding: 6px 12px;
-        padding-bottom: max(10px, env(safe-area-inset-bottom));
+        padding: 4px 0;
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+      }
+      .nav-inner {
+        padding: 0 4px;
+        gap: 1px;
+        justify-content: space-between;
       }
       .nav-item {
-        padding: 6px 4px;
+        flex: 1 1 0;
+        min-width: 40px;
+        max-width: none;
+        width: auto;
+        padding: 6px 2px 4px;
+        min-height: 48px;
+        gap: 2px;
       }
       .nav-icon {
-        font-size: 18px;
+        width: 20px;
+        height: 20px;
+      }
+      .nav-icon svg {
+        width: 20px;
+        height: 20px;
       }
       .nav-label {
-        font-size: 9px;
+        font-size: 8px;
+        letter-spacing: -0.3px;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    
+    /* Kleine Bildschirme - Labels noch kleiner */
+    @media (max-width: 380px) {
+      .nav-item {
+        min-width: 36px;
+        padding: 5px 1px 3px;
+        min-height: 44px;
+      }
+      .nav-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+      .nav-label {
+        font-size: 7px;
+        letter-spacing: -0.4px;
+      }
+    }
+    
+    /* Sehr kleine Bildschirme - nur Icons */
+    @media (max-width: 320px) {
+      .nav-label {
+        display: none;
+      }
+      .nav-item {
+        min-height: 40px;
+        padding: 8px 2px;
       }
     }
 
