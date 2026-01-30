@@ -9004,7 +9004,7 @@ Tel. +49 871 9740 734 – 0</div>
         window.API_BASE = p.get('api');
       } else if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
         // Produktion: Backend-URL aus Environment oder Standard
-        window.API_BASE = window.SALES_ACADEMY_API || 'https://sales-academy-api.up.railway.app';
+        window.API_BASE = window.SALES_ACADEMY_API || 'https://sales-academy-production.up.railway.app';
       }
     })();
     var API_BASE = window.API_BASE || 'http://localhost:4000';
