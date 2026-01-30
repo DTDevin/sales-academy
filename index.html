@@ -10361,15 +10361,41 @@ Tel. +49 871 9740 734 – 0</div>
       if (greetingEl) greetingEl.textContent = greeting;
     }
 
-    // ========== NAVIGATION ==========
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const viewId = item.dataset.view;
-        if (viewId) switchToView(viewId);
+    // ========== NAVIGATION - Robust Implementation ==========
+    function initNavigation() {
+      // Mobile Navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        // Remove old listeners by cloning
+        const newItem = item.cloneNode(true);
+        item.parentNode.replaceChild(newItem, item);
+        
+        newItem.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const viewId = this.dataset.view;
+          console.log('[Nav] Mobile click:', viewId);
+          if (viewId) switchToView(viewId);
+        }, { passive: false });
       });
-    });
+      
+      // Desktop Navigation
+      document.querySelectorAll('.desktop-nav-item').forEach(item => {
+        // Remove old listeners by cloning
+        const newItem = item.cloneNode(true);
+        item.parentNode.replaceChild(newItem, item);
+        
+        newItem.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const viewId = this.dataset.view;
+          console.log('[Nav] Desktop click:', viewId);
+          if (viewId) switchToView(viewId);
+        }, { passive: false });
+      });
+    }
+    
+    // Initialize navigation
+    initNavigation();
 
     // ========== GLOBAL TRACK SWITCH ==========
     let currentTrack = 'amy';
@@ -10653,12 +10679,17 @@ Tel. +49 871 9740 734 – 0</div>
     }
 
     function switchToView(viewId) {
+      console.log('[switchToView] Called with:', viewId);
+      
+      // Protected views require login
       if (viewId === 'me' || viewId === 'leads' || viewId === 'documents' || viewId === 'teamchat') {
         if (!getAccessToken()) {
+          console.log('[switchToView] No token, redirecting to login');
           window.location.href = 'login.html';
           return;
         }
       }
+      
       // Update Mobile Nav
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       const mobileNav = document.querySelector('.nav-item[data-view="' + viewId + '"]');
@@ -10672,27 +10703,25 @@ Tel. +49 871 9740 734 – 0</div>
       // Switch View
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       var viewEl = document.getElementById('view-' + viewId);
-      if (viewEl) viewEl.classList.add('active');
+      if (viewEl) {
+        viewEl.classList.add('active');
+        console.log('[switchToView] Activated view:', viewId);
+      } else {
+        console.error('[switchToView] View not found:', 'view-' + viewId);
+      }
       
+      // Load view-specific data
       if (viewId === 'me') loadMeView();
       if (viewId === 'leads') loadLeadsView();
       if (viewId === 'documents') loadDocumentsView();
       if (viewId === 'teamchat') loadTeamChatView();
       
-      // Scroll to top smoothly
+      // Scroll to top
       var mainEl = document.querySelector('.main');
       if (mainEl) mainEl.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // ========== DESKTOP NAVIGATION ==========
-    document.querySelectorAll('.desktop-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const viewId = item.dataset.view;
-        if (viewId) switchToView(viewId);
-      });
-    });
+    // Desktop Navigation is now handled in initNavigation() above
 
     function saveStats() {
       safeSet('todayStats', JSON.stringify(stats));
