@@ -4,7 +4,8 @@
   "description": "Enterprise API for Sales Academy Platform - Auth, Profile, Leads, Chat, Documents",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run copy-migrations",
+    "copy-migrations": "node -e \"const fs=require('fs'),p=require('path');const s='src/db/migrations',d='dist/db/migrations';if(!fs.existsSync(d))fs.mkdirSync(d,{recursive:true});fs.readdirSync(s).filter(f=>f.endsWith('.sql')).forEach(f=>fs.copyFileSync(p.join(s,f),p.join(d,f)));console.log('Migrations copied to dist')\"",
     "start": "node dist/index.js",
     "start:prod": "node dist/db/migrate.js up && node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
