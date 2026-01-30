@@ -10029,9 +10029,11 @@ Tel. +49 871 9740 734 – 0</div>
 
     // ========== NAVIGATION ==========
     document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', () => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const viewId = item.dataset.view;
-        switchToView(viewId);
+        if (viewId) switchToView(viewId);
       });
     });
 
@@ -10350,9 +10352,11 @@ Tel. +49 871 9740 734 – 0</div>
     
     // ========== DESKTOP NAVIGATION ==========
     document.querySelectorAll('.desktop-nav-item').forEach(item => {
-      item.addEventListener('click', () => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const viewId = item.dataset.view;
-        switchToView(viewId);
+        if (viewId) switchToView(viewId);
       });
     });
 
