@@ -6,9 +6,11 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "start:prod": "node dist/db/migrate.js up && node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "migrate:up": "ts-node src/db/migrate.ts up",
     "migrate:down": "ts-node src/db/migrate.ts down",
+    "migrate:prod": "node dist/db/migrate.js up",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit"
   },
