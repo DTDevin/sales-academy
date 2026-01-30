@@ -1966,8 +1966,9 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       margin-left: auto;
+      flex-shrink: 0;
     }
     
     /* Auth block (Header) */
@@ -1975,6 +1976,22 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-shrink: 0;
+    }
+    
+    /* Mobile: Smaller gap and hide text */
+    @media (max-width: 767px) {
+      .header-actions {
+        gap: 6px;
+      }
+      .auth-link {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+      .theme-toggle {
+        width: 32px;
+        height: 32px;
+      }
     }
     .auth-link {
       font-size: 12px;
@@ -2081,14 +2098,23 @@
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 100;
+      z-index: 1000;
       padding: 8px 0;
       padding-bottom: max(8px, env(safe-area-inset-bottom));
-      background: rgba(10, 10, 11, 0.95);
+      background: rgba(10, 10, 11, 0.98);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border-top: 1px solid rgba(212, 175, 55, 0.06);
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      display: none; /* Hidden by default */
     }
+    
+    /* Show on Mobile only */
+    @media (max-width: 767px) {
+      .bottom-nav {
+        display: block !important;
+      }
+    }
+    
     .nav-inner {
       display: flex;
       overflow-x: auto;
@@ -2096,30 +2122,33 @@
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      padding: 0 12px;
-      gap: 2px;
+      padding: 0 8px;
+      gap: 0;
+      justify-content: space-between;
     }
     .nav-inner::-webkit-scrollbar {
       display: none;
     }
     .nav-item {
-      flex: 0 0 auto;
-      min-width: 60px;
+      flex: 1 1 auto;
+      min-width: 44px;
+      max-width: 70px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      padding: 8px 10px;
-      min-height: 52px;
+      justify-content: center;
+      gap: 3px;
+      padding: 6px 4px;
+      min-height: 48px;
       background: none;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.2s ease;
       color: var(--text-muted);
       position: relative;
       -webkit-tap-highlight-color: transparent;
-      scroll-snap-align: start;
+      scroll-snap-align: center;
     }
     .nav-item::after {
       content: '';
@@ -2160,17 +2189,20 @@
       transition: transform 0.2s ease;
     }
     .nav-icon svg {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       stroke: currentColor;
       transition: stroke 0.2s ease;
     }
     .nav-label {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
       text-transform: uppercase;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     /* Desktop Navigation - Hidden by default on mobile */
@@ -4323,7 +4355,7 @@
     /* Desktop */
     @media (min-width: 768px) {
       .bottom-nav {
-        display: none;
+        display: none !important;
       }
       .main {
         padding-bottom: 40px;
@@ -4342,7 +4374,7 @@
       
       /* Desktop Navigation in Header */
       .desktop-nav {
-        display: flex;
+        display: flex !important;
         gap: 4px;
       }
       .desktop-nav-item {
@@ -4391,9 +4423,6 @@
     @media (max-width: 767px) {
       .desktop-nav {
         display: none !important;
-      }
-      .bottom-nav {
-        display: block !important;
       }
       .chat-panel {
         max-width: 100%;
@@ -7832,22 +7861,23 @@
         <style>
           /* Team-Chat Enterprise Fullscreen - Fixed Layout */
           #view-teamchat {
-            display: none !important;
-            visibility: hidden;
-            position: fixed;
-            top: 120px;
-            left: 0;
-            right: 0;
-            bottom: 80px;
-            width: 100vw;
-            height: auto;
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 180px);
+            min-height: 500px;
             max-width: none;
             max-height: none;
-            overflow: visible;
-            z-index: 500;
+            overflow: hidden;
+            z-index: 50;
             background: var(--bg-primary);
             padding: 0;
             margin: 0;
+          }
+          @media (max-width: 767px) {
+            #view-teamchat {
+              height: calc(100vh - 200px);
+              min-height: 400px;
+            }
           }
           #view-teamchat.active {
             display: block !important;
@@ -7861,12 +7891,13 @@
             height: 100% !important;
             width: 100% !important;
             background: var(--bg-primary);
-            overflow: visible;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            overflow: hidden;
+            position: relative;
+          }
+          @media (max-width: 767px) {
+            .tc-container {
+              flex-direction: column;
+            }
           }
           /* Sidebar - Glassmorphism */
           .tc-sidebar {
@@ -8463,10 +8494,6 @@
           
           /* LAPTOP */
           @media (min-width: 1024px) and (max-width: 1279px) {
-            #view-teamchat {
-              top: 100px !important;
-              bottom: 0 !important;
-            }
             .tc-sidebar {
               width: 320px !important;
               min-width: 320px !important;
@@ -8476,10 +8503,6 @@
           
           /* DESKTOP */
           @media (min-width: 1280px) and (max-width: 1535px) {
-            #view-teamchat {
-              top: 100px !important;
-              bottom: 0 !important;
-            }
             .tc-sidebar {
               width: 360px !important;
               min-width: 360px !important;
@@ -8492,10 +8515,6 @@
           
           /* LARGE DESKTOP */
           @media (min-width: 1536px) {
-            #view-teamchat {
-              top: 100px !important;
-              bottom: 0 !important;
-            }
             .tc-sidebar {
               width: 400px !important;
               min-width: 400px !important;
